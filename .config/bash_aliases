@@ -21,7 +21,8 @@ alias ll='ls -alF' \
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-EDITOR=code
+export EDITOR=code
+export EDITOR_QUICK=nano
 
 alias ka="killall" \
     e="$EDITOR" \
@@ -44,6 +45,7 @@ se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDIT
         gV="cd ~/Media/Videos" \
         gv="cd ~/Void" \
         gs="cd ~/.scripts" \
+        g.="cd ~/dotfiles" \
         gn="cd ~/Notes" \
         gt="cd ~/.trash" \
         gb="cd -"
