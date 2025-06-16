@@ -1,0 +1,10 @@
+[include]
+	path = ~/.gitconfig.local
+[user]
+	name = Romwierz
+[core]
+	editor = code --wait
+[diff]
+	tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
