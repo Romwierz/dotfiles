@@ -2,114 +2,145 @@
     # https://github.com/gokcehan/lf/blob/master/etc/lfrc.example
     # https://github.com/ericmurphyxyz/dotfiles/blob/master/.config/lf/lfrc
 
-# interpreter for shell commands
-set shell sh
+### Things from default template
 
-# set '-eu' options for shell commands
-# These options are used to have safer shell commands. Option '-e' is used to
-# exit on error and option '-u' is used to give error for unset variables.
-# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
-# $fx variables contain names with '*' or '?' characters. However, this option
-# is used selectively within individual commands as it can be limiting at
-# times.
-set shellopts '-eu'
+    # interpreter for shell commands
+    set shell sh
 
-# set internal field separator (IFS) to "\n" for shell commands
-# This is useful to automatically split file names in $fs and $fx properly
-# since default file separator used in these variables (i.e. 'filesep' option)
-# is newline. You need to consider the values of these options and create your
-# commands accordingly.
-set ifs "\n"
+    # set '-eu' options for shell commands
+    # These options are used to have safer shell commands. Option '-e' is used to
+    # exit on error and option '-u' is used to give error for unset variables.
+    # Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+    # $fx variables contain names with '*' or '?' characters. However, this option
+    # is used selectively within individual commands as it can be limiting at
+    # times.
+    set shellopts '-eu'
 
-# leave some space at the top and the bottom of the screen
-set scrolloff 10
+    # set internal field separator (IFS) to "\n" for shell commands
+    # This is useful to automatically split file names in $fs and $fx properly
+    # since default file separator used in these variables (i.e. 'filesep' option)
+    # is newline. You need to consider the values of these options and create your
+    # commands accordingly.
+    set ifs "\n"
 
-# Use the `dim` attribute instead of underline for the cursor in the preview pane
-set cursorpreviewfmt "\033[7;2m"
+    # leave some space at the top and the bottom of the screen
+    set scrolloff 10
 
-# use enter for shell commands
-map <enter> shell
+    # Use the `dim` attribute instead of underline for the cursor in the preview pane
+    set cursorpreviewfmt "\033[7;2m"
 
-# show the result of execution of previous commands
-map ` !true
+    # use enter for shell commands
+    map <enter> shell
 
-# execute current file (must be executable)
-map x $$f
-map X !$f
+    # show the result of execution of previous commands
+    map ` !true
 
-# dedicated keys for file opener actions
-map o &mimeopen $f
-map O $mimeopen --ask $f
+    # execute current file (must be executable)
+    map x $$f
+    map X !$f
 
-# define a custom 'open' command
-# This command is called when current file is not a directory. You may want to
-# use either file extensions and/or mime types here. Below uses an editor for
-# text files and a file opener for the rest.
-cmd open &{{
-    case $(file --mime-type -Lb $f) in
-        text/*) lf -remote "send $id \$$EDITOR \$fx";;
-        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
-    esac
-}}
+    # dedicated keys for file opener actions
+    map o &mimeopen $f
+    map O $mimeopen --ask $f
 
-# mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
+    # define a custom 'open' command
+    # This command is called when current file is not a directory. You may want to
+    # use either file extensions and/or mime types here. Below uses an editor for
+    # text files and a file opener for the rest.
+    cmd open &{{
+        case $(file --mime-type -Lb $f) in
+            text/*|inode/x-empty) lf -remote "send $id \$$EDITOR \$fx";;
+            inode/directory) lf -remote "send $id cd '$f'";;
+            *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+        esac
+    }}
 
-# define a custom 'rename' command without prompt for overwrite
-# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-# map r push :rename<space>
+    cmd open_quick &{{
+        case $(file --mime-type -Lb $f) in
+            text/*|inode/x-empty) lf -remote "send $id \$$EDITOR_QUICK \$fx";;
+            inode/directory) lf -remote "send $id cd '$f'";;
+            *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+        esac
+    }}
 
-# make sure trash folder exists
-%mkdir -p ~/.trash
+    # mkdir command. See wiki if you want it to select created dir
+    map a :push %mkdir<space>
 
-# move current file or selected files to trash folder
-# (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv -t ~/.trash $fx
+    # define a custom 'rename' command without prompt for overwrite
+    # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+    # map r push :rename<space>
 
-# define a custom 'delete' command
-# cmd delete ${{
-#     set -f
-#     printf "$fx\n"
-#     printf "delete?[y/n]"
-#     read ans
-#     [ "$ans" = "y" ] && rm -rf $fx
-# }}
+    # make sure trash folder exists
+    %mkdir -p ~/.trash
 
-# use '<delete>' key for either 'trash' or 'delete' command
-# map <delete> trash
-# map <delete> delete
+    # move current file or selected files to trash folder
+    # (also see 'man mv' for backup/overwrite options)
+    # cmd trash %set -f; mv -t ~/.trash $fx
 
-# extract the current file with the right command
-# (xkcd link: https://xkcd.com/1168/)
-cmd extract ${{
-    set -f
-    case $f in
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
-        *.tar.gz|*.tgz) tar xzvf $f;;
-        *.tar.xz|*.txz) tar xJvf $f;;
-        *.zip) unzip $f;;
-        *.rar) unrar x $f;;
-        *.7z) 7z x $f;;
-    esac
-}}
+    cmd trash ${{
+        set -f
+        for f in $fx; do
+            name=$(basename $f)
+            if [ -e "$HOME/.trash/${name}" ]; then
+                case $(stat -c %F "$HOME/.trash/${name}") in
+                    "regular file"|"regular empty file") desc="File";;
+                    "directory") desc="Directory";;
+                    *) desc="Object";;
+                esac
+                printf "$desc with name '$name' already exists in ~/.trash. Overwrite? (y/n) "
+                read ans
+                [ "$ans" != "y" ] && continue
+                rm -rf "$HOME/.trash/${name}" && mv -t ~/.trash $f
+            else
+                mv -t ~/.trash $f
+            fi
+        done
+    }}
 
-# compress current file or selected files with tar and gunzip
-cmd tar ${{
-    set -f
-    mkdir $1
-    cp -r $fx $1
-    tar czf $1.tar.gz $1
-    rm -rf $1
-}}
+    # define a custom 'delete' command
+    # cmd delete ${{
+    #     set -f
+    #     printf "$fx\n"
+    #     printf "delete?[y/n]"
+    #     read ans
+    #     [ "$ans" = "y" ] && rm -rf $fx
+    # }}
 
-# compress current file or selected files with zip
-cmd zip ${{
-    set -f
-    mkdir $1
-    cp -r $fx $1
-    zip -r $1.zip $1
-    rm -rf $1
-}}
+    # use '<delete>' key for either 'trash' or 'delete' command
+    # map <delete> trash
+    # map <delete> delete
+
+    # extract the current file with the right command
+    # (xkcd link: https://xkcd.com/1168/)
+    cmd extract ${{
+        set -f
+        case $f in
+            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+            *.tar.gz|*.tgz) tar xzvf $f;;
+            *.tar.xz|*.txz) tar xJvf $f;;
+            *.zip) unzip $f;;
+            *.rar) unrar x $f;;
+            *.7z) 7z x $f;;
+        esac
+    }}
+
+    # compress current file or selected files with tar and gunzip
+    cmd tar ${{
+        set -f
+        mkdir $1
+        cp -r $fx $1
+        tar czf $1.tar.gz $1
+        rm -rf $1
+    }}
+
+    # compress current file or selected files with zip
+    cmd zip ${{
+        set -f
+        mkdir $1
+        cp -r $fx $1
+        zip -r $1.zip $1
+        rm -rf $1
+    }}
 
 ### Basic settings
     set hidden false
@@ -129,10 +160,16 @@ cmd zip ${{
         echo $1
     }}
 
+    cmd mkfile ${{
+        printf "File Name: "
+        read ans
+        $EDITOR_QUICK $ans
+    }}
+
     cmd mkdir ${{
         printf "Directory Name: "
         read ans
-        mkdir $ans
+        mkdir "$ans"
     }}
 
 ### Keybindings
@@ -152,8 +189,10 @@ cmd zip ${{
     map y copy
     map mf mkfile
     map md mkdir
-    # map <enter> to open file in main app (like VS Code as main code editor)
+    # map o to open file in main app (like VS Code as main code editor)
+    map o open $f
     # map <right> to open text file in quick editor (like nano/micro/vim)
+    map <right> open_quick $f
 
     # Movement
     map gc cd ~/.config
@@ -164,9 +203,10 @@ cmd zip ${{
     map gV cd ~/Media/Videos
     map gv cd ~/Void
     map gs cd ~/.scripts
+    map g. cd ~/dotfiles
     map gn cd ~/Notes
     map gt cd ~/.trash
-    map gb cd -
+    map gb :mark-load "\'"
 
 ### Cheatsheet
     
