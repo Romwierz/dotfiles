@@ -1,0 +1,75 @@
+# Wizardries explanations:
+#   ${FZF_TMUX_HEIGHT:-40%}             --- FZF_TMUX_HEIGHT value or 40% if unset (or null)
+#   ${FZF_DEFAULT_OPTS-}                --- FZF_DEFAULT_OPTS value or empty string if unset (not the same as ':-')
+#   -n2..,..                            --- specifies which parts (fields) of the line is searchable, in this case
+#                                           fields 2 and onwards are searchable because 1 field in history is line number
+#   --scheme=history                    --- fzf'z algorithm's tweaks to better suit history command
+#   +m                                  --- multi-select off
+#   --read0                             --- read input is delimited by ASCII NUL instead on newline
+#   perl -n -l0 -e ...                  --- https://www.geos.ed.ac.uk/~bmg/software/Perl%20Books/perlnut/ch03_02.htm
+#                                       --- -l0 means "set line separator to NUL on input and output"
+#   builtin fc -lnr -2147483648         --- bash-builtin for interacting with commands' history
+#                                       --- [l]ist, omit line [n]umbers, [r]everse order,
+#                                       --- -2147483648 means to show max 2147483648 previous commands  
+#                                       --- fc is used probably because it shows history in a cleaner way (without timestamps)
+#   HISTTIMEFORMAT='' builtin history 1 --- 
+#   READLINE_LINE=${output#*$'\t'}      --- removes everything up to (and including) the first tab from $output
+#                                       --- this way selected command is pasted into the command line
+#   READLINE_POINT=0x7fffffff           --- moves to cursor to the end of the line
+__fzf_history_for_reference() {
+    local output opts script
+    opts="--height ${FZF_TMUX_HEIGHT:-40%} --bind=ctrl-z:ignore ${FZF_DEFAULT_OPTS-} \
+    -n2..,.. --scheme=history --bind=ctrl-r:toggle-sort ${FZF_CTRL_R_OPTS-} +m --read0"
+    script='BEGIN { getc; $/ = "\n\t"; $HISTCOUNT = $ENV{last_hist} + 1 } s/^[ *]//; \
+    print $HISTCOUNT - $. . "\t$_" if !$seen{$_}++'
+    output=$(
+      set +o pipefail
+      builtin fc -lnr -2147483648 |
+        last_hist=$(HISTTIMEFORMAT='' builtin history 1) command perl -n -l0 -e "$script" |
+        FZF_DEFAULT_OPTS="$opts" $(__fzfcmd) --query "$READLINE_LINE"
+    ) || return
+    READLINE_LINE=${output#*$'\t'}
+    if [[ -z "$READLINE_POINT" ]]; then
+      echo "$READLINE_LINE"
+    else
+      READLINE_POINT=0x7fffffff
+    fi
+}
+
+__fzf_history_global__() {
+    local selected
+
+  # Pokazuje historię z datami, sortuje odwrotnie (najświeższe na górze)
+  selected=$(tac ~/.persistent_history | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' | tr -d '\r' | fzf \
+    --no-sort \
+    --tiebreak=index \
+    --bind=ctrl-r:toggle-sort \
+    --prompt='Global History> ' \
+    --height=40% \
+    # --reverse \
+  )
+
+  # Wyciąga tylko część z komendą (bez daty)
+  local command_part="${selected#*| }"
+
+  # Ustawia linię edycji powłoki na wybrane polecenie
+  if [[ -n "$command_part" ]]; then
+    READLINE_LINE="$command_part"
+    READLINE_POINT=${#READLINE_LINE}
+  fi
+}
+
+__fzf_man_search__ () {
+    man -k . | fzf | awk '{print $1}' | xargs man
+}
+alias manfzf=__fzf_man_search__
+
+# ALT-M - Search through man pages and open the selected one
+bind -m emacs-standard -x '"\em": __fzf_man_search__'
+bind -m vi-command -x '"\em": __fzf_man_search__'
+bind -m vi-insert -x '"\em": __fzf_man_search__'
+
+# ALT-R - Paste the selected command from global history into the command line
+bind -m emacs-standard -x '"\er": __fzf_history_global__'
+bind -m vi-command -x '"\er": __fzf_history_global__'
+bind -m vi-insert -x '"\er": __fzf_history_global__'
