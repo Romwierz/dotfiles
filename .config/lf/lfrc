@@ -43,18 +43,21 @@
     map o &mimeopen $f
     map O $mimeopen --ask $f
 
-    # define a custom 'open' command
-    # This command is called when current file is not a directory. You may want to
-    # use either file extensions and/or mime types here. Below uses an editor for
-    # text files and a file opener for the rest.
-    cmd open &{{
+    # define a custom 'open' command with other name
+    # for some reason, if command is named 'open', directory name in $f cannot be passed,
+    # because it expands to an empty string
+    # so for example directory cannot be opened with $EDITOR
+    # but using name other than 'open' $f is passed even if it'a a directory 
+    cmd open1 &{{
         case $(file --mime-type -Lb $f) in
             text/*|inode/x-empty) lf -remote "send $id \$$EDITOR \$fx";;
-            inode/directory) lf -remote "send $id cd '$f'";;
+            inode/directory) lf -remote "send $id \$$EDITOR \$fx";;
             *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
         esac
     }}
 
+    # command to open a text file in current lf window or to move inside a directory
+    # for other files it has similar effect as standard open command
     cmd open_quick &{{
         case $(file --mime-type -Lb $f) in
             text/*|inode/x-empty) lf -remote "send $id \$$EDITOR_QUICK \$fx";;
@@ -190,7 +193,7 @@
     map mf mkfile
     map md mkdir
     # map o to open file in main app (like VS Code as main code editor)
-    map o open $f
+    map o open1 $f
     # map <right> to open text file in quick editor (like nano/micro/vim)
     map <right> open_quick $f
 
