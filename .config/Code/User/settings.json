@@ -13,7 +13,8 @@
         "foreground": "#708090"  // Slate Grey
         // "foreground": "#333333"  // Charcoal
         // "foreground": "#808080"  // Grey (neutral and balanced)
-        }
+        },
+    "types": "#0400ff"
     },
     "git-graph.dialog.rebase.launchInteractiveRebase": true,
     "makefile.configureOnOpen": true,

@@ -10,4 +10,4 @@ The simplest way to use it is as follows:
 \- For example file `$HOME/.bashrc` goes into `$HOME/dotfiles/.bashrc` and directory `$HOME/.config/i3` goes into `$HOME/dotfiles/.config/i3`.
 - Run `$ stow .` command inside *dotfiles* directory.  
 \- The default stow directory is current directory and the default target directory is parent directory.  
-\- So it takes the package `.` (which is the current directory and its whole content recursively) and creates a symlinks to all of its elements inside `$HOME`.
+\- So it takes the package `.` (which is the current directory and its whole content recursively) and creates symlinks to all of its elements inside `$HOME`.
