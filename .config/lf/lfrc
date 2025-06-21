@@ -50,7 +50,7 @@
     # but using name other than 'open' $f is passed even if it'a a directory 
     cmd open1 &{{
         case $(file --mime-type -Lb $f) in
-            text/*|inode/x-empty) lf -remote "send $id \$$EDITOR \$fx";;
+            text/*|inode/x-empty|application/json) lf -remote "send $id \$$EDITOR \$fx";;
             inode/directory) lf -remote "send $id \$$EDITOR \$fx";;
             *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
         esac
