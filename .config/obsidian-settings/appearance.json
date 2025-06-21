@@ -1,0 +1,10 @@
+{
+  "cssTheme": "Things",
+  "theme": "moonstone",
+  "baseFontSizeAction": true,
+  "baseFontSize": 16,
+  "showViewHeader": true,
+  "enabledCssSnippets": [
+    "my-style-settings"
+  ]
+}

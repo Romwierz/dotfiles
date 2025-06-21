@@ -1,0 +1,212 @@
+/* ------------------------------
+   Uniwersalne style dla nagłówków
+------------------------------ */
+
+/* Kolor tekstu nagłówków (jasny + ciemny tryb) */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.cm-header,
+.cm-header a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+/* Ciemny motyw — nagłówki */
+body.theme-dark .markdown-preview-view h1,
+body.theme-dark .markdown-preview-view h2,
+body.theme-dark .markdown-preview-view h3,
+body.theme-dark .markdown-preview-view h4,
+body.theme-dark .markdown-preview-view h5,
+body.theme-dark .markdown-preview-view h6,
+body.theme-dark .cm-header,
+body.theme-dark .cm-header a {
+  color: white !important;
+}
+
+/* Linki w nagłówkach */
+.markdown-preview-view h1 a,
+.markdown-preview-view h2 a,
+.markdown-preview-view h3 a,
+.markdown-preview-view h4 a,
+.markdown-preview-view h5 a,
+.markdown-preview-view h6 a {
+  color: black !important;
+  text-decoration: none;
+}
+
+body.theme-dark .markdown-preview-view h1 a,
+body.theme-dark .markdown-preview-view h2 a,
+body.theme-dark .markdown-preview-view h3 a,
+body.theme-dark .markdown-preview-view h4 a,
+body.theme-dark .markdown-preview-view h5 a,
+body.theme-dark .markdown-preview-view h6 a {
+  color: white !important;
+}
+
+/* ------------------------------
+   Podświetlenie nagłówków
+------------------------------ */
+
+/* Jasny motyw */
+.markdown-preview-view h1,
+.markdown-source-view.mod-cm6 .cm-header-1 {
+  background-color: #FFF9A3;
+  display: inline;
+  padding: 0.001em 0.1em;
+  border-radius: 2px;
+}
+
+.markdown-preview-view h2,
+.markdown-source-view.mod-cm6 .cm-header-2 {
+  background-color: #abd1fc;
+  display: inline;
+  padding: 0em 0.1em;
+  border-radius: 2px;
+}
+
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.markdown-source-view.mod-cm6 .cm-header-3,
+.markdown-source-view.mod-cm6 .cm-header-4,
+.markdown-source-view.mod-cm6 .cm-header-5,
+.markdown-source-view.mod-cm6 .cm-header-6 {
+  background-color: #c5e0fe;
+  display: inline;
+  padding: 0em 0.1em;
+  border-radius: 2px;
+}
+
+/* Ciemny motyw */
+body.theme-dark .markdown-preview-view h1,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-1 {
+  background-color: #4a4824;
+}
+
+body.theme-dark .markdown-preview-view h2,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-2 {
+  background-color: #506a87;
+}
+
+body.theme-dark .markdown-preview-view h3,
+body.theme-dark .markdown-preview-view h4,
+body.theme-dark .markdown-preview-view h5,
+body.theme-dark .markdown-preview-view h6,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-3,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-4,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-5,
+body.theme-dark .markdown-source-view.mod-cm6 .cm-header-6 {
+  background-color: #37414c;
+}
+
+/* ------------------------------
+   Stylowanie pogrubienia i kursywy
+------------------------------ */
+
+/* Jasny motyw */
+.markdown-preview-view strong,
+.cm-s-obsidian span.cm-strong,
+.markdown-preview-view em,
+.cm-s-obsidian span.cm-em {
+  color: #000000 !important;
+}
+
+/* Ciemny motyw */
+body.theme-dark .markdown-preview-view strong,
+body.theme-dark .cm-s-obsidian span.cm-strong,
+body.theme-dark .markdown-preview-view em,
+body.theme-dark .cm-s-obsidian span.cm-em {
+  color: #ffb3b3 !important;
+}
+
+/* ------------------------------
+   Stylowanie Inline code
+------------------------------ */
+
+/* Jasny motyw */
+.markdown-preview-view code,
+.cm-s-obsidian span.cm-inline-code {
+  background-color: #f5f5f5 !important;
+  color: #d95a7a !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-family: monospace;
+}
+
+/* Ciemny motyw */
+body.theme-dark .markdown-preview-view code,
+body.theme-dark .cm-s-obsidian span.cm-inline-code {
+  background-color: #2b2b2b !important;
+  color: #ffb3b3 !important;
+  border: 1px solid #555 !important;
+}
+
+/* ------------------------------
+   Tabele
+------------------------------ */
+
+/* Jasny motyw – jednakowe tło nagłówków i komórek */
+.markdown-preview-view th,
+.markdown-preview-view td {
+  /* background-color: #ffffff !important; */
+  color: #111 !important;
+  border: 1px solid rgb(208, 208, 208) !important;
+  padding: 0.4em;
+}
+
+/* Ciemny motyw – jednakowe tło */
+body.theme-dark .markdown-preview-view th,
+body.theme-dark .markdown-preview-view td {
+  /* background-color: #1e1e1e !important; */
+  color: #ddd !important;
+  border: 1px solid rgb(69, 75, 92) !important;
+}
+
+/* ------------------------------
+   Kody blokowe (``` code block ```)
+------------------------------ */
+
+/* Jasny motyw */
+.markdown-preview-view pre code {
+  background-color: #f5f5f5;
+  color: #333;
+  display: block;
+  padding: 1em;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: monospace;
+}
+
+/* Ciemny motyw */
+body.theme-dark .markdown-preview-view pre code {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+/* ------------------------------
+   Obramowanie obrazów
+------------------------------ */
+
+/* Jasny motyw */
+.markdown-preview-view img {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 2px;
+  background-color: #fff;
+}
+
+/* Ciemny motyw */
+body.theme-dark .markdown-preview-view img {
+  border: 1px solid #262938;
+  border-radius: 6px;
+  padding: 2px;
+  background-color: #1e1e1e;
+}
