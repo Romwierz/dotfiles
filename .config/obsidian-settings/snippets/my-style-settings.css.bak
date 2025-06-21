@@ -1,0 +1,80 @@
+/* Set black color for all headers*/
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+  color: black !important;
+}
+
+/* Set black color for links in headers */
+.markdown-preview-view h1 a,
+.markdown-preview-view h2 a,
+.markdown-preview-view h3 a,
+.markdown-preview-view h4 a,
+.markdown-preview-view h5 a,
+.markdown-preview-view h6 a {
+  color: black !important;
+  text-decoration: none; /* optionally - disable links underline */
+}
+
+/* For Live Preview */
+.cm-header,
+.cm-header a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+/* Bold text */
+.markdown-preview-view strong,
+.cm-s-obsidian span.cm-strong {
+  color: #9e0404 !important;
+}
+
+/* Italic text */
+.markdown-preview-view em,
+.cm-s-obsidian span.cm-em {
+  color: #9e0404 !important;
+}
+
+/* Highlight text*/
+h1 {
+  background-color: #FFF9A3;
+  display: inline;
+  padding: 0.001em 0.1em;
+  border-radius: 2px;
+}
+
+h2, h3, h4, h5, h6 {
+  background-color: #b2d2f8;
+  display: inline;
+  padding: 0em 0.1em;
+  border-radius: 2px;
+}
+
+/* Highlight for h1 */
+.markdown-preview-view h1,
+.markdown-source-view.mod-cm6 .cm-header-1 {
+  background-color: #FFF9A3;
+  display: inline;
+  padding: 0.001em 0.1em;
+  border-radius: 2px;
+}
+
+/* Highlight for h2–h6 */
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6,
+.markdown-source-view.mod-cm6 .cm-header-2,
+.markdown-source-view.mod-cm6 .cm-header-3,
+.markdown-source-view.mod-cm6 .cm-header-4,
+.markdown-source-view.mod-cm6 .cm-header-5,
+.markdown-source-view.mod-cm6 .cm-header-6 {
+  background-color: #b2d2f8;
+  display: inline;
+  padding: 0em 0.1em;
+  border-radius: 2px;
+}
