@@ -1,0 +1,94 @@
+[include]
+	path = ~/.gitconfig.local
+
+[user]
+	name = Romwierz
+
+[commit]
+    template = ~/.config/git/template
+    verbose = true  # add more context to commit messages
+
+[core]
+	editor = code --wait
+    compression = 9
+    whitespace = error
+    preloadindex = true
+
+[diff]
+	tool = vscode
+    context = 3
+    renames = copies
+    interHunkCopies = 10
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+# [pager]
+#     diff = diff-so-fancy | $PAGER
+
+# [diff-so-fancy]
+#     markEmptyLines = false
+
+[init]
+    defaultBranch = main
+
+[log]
+    abbrevCommit = true  # short commits
+    graphColors = blue,yellow,cyan,magenta,green,red
+
+[status]
+    branch = true # shows current branch name in 'git status' output
+    showStash = true
+    showUntrackedFiles = all # show untracked files without grouping them into directories
+
+[push]
+    autoSetupRemote = true  # easier to push new branches
+    default = current  # push only current branch by default
+    followTags = true  # push also tags
+    gpgSign = false  # my remotes doesn't support sign pushes
+
+[pull]
+    rebase = true
+    default = current
+
+[rebase]
+    autoStash = true
+    missingCommitsCheck = warn  # warn if rebasing with missing commits
+
+# Integrity
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = -taggerdate
+
+# Colors
+[color "blame"]
+    highlightRecent = black bold,1 year ago,white,1 month ago,default,7 days ago,blue
+
+[color "branch"]
+    current  = magenta
+    local    = default
+    remote   = yellow
+    upstream = green
+    plain    = blue
+
+[color "diff"]
+    meta       = black bold
+    frag       = magenta
+    context    = white
+    whitespace = yellow reverse
+    old        = red
+
+[color.decorate]
+    HEAD = red
+    branch = blue
+    tag = yellow
+    remoteBranch = magenta
+
+# URL shortcuts
+[url "git@github.com:Romwierz/"]
+    insteadOf = "romwierz:"
+
+[url "git@github.com:"]
+    insteadOf = "gh:"

@@ -51,3 +51,17 @@ se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDIT
         gt="cd ~/.trash" \
         gb="cd -"
 
+### Git
+    alias git?="clear -x; git status; git log --oneline -5" \
+        gits="git status --short" \
+        gitd="git diff --output-indicator-new='+' --output-indicator-old='-'" \
+        gitds="git diff --staged --output-indicator-new='+' --output-indicator-old='-'" \
+        gitap="git add --patch" \
+        gitc="git commit" \
+        gitps="git push" \
+        gitpl="git pull" \
+        gitl="git log --oneline" \
+        gitl="git log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'" \
+        gitb="git branch" \
+        giti="git init" \
+        gitcl="git clone"
