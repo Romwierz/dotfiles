@@ -206,7 +206,7 @@
     map gV cd ~/Media/Videos
     map gv cd ~/Void
     map gs cd ~/.scripts
-    map g. cd ~/dotfiles
+    map g. :cd ~/dotfiles; set hidden true
     map gn cd ~/Notes
     map gt cd ~/.trash
     map gb :mark-load "\'"
