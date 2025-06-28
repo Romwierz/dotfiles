@@ -65,3 +65,6 @@ se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDIT
         gitb="git branch" \
         giti="git init" \
         gitcl="git clone"
+
+### Misc
+    alias less="less -i"
