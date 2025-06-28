@@ -1,0 +1,22 @@
+stow
+lf
+fzf
+wikiman
+btop
+bat
+ssh
+git
+rofi
+brave
+vscode
+xsel
+moreutils
+obsidian
+notify-send
+i3-blocks
+
+manpages-dev
+
+fonts
+
+libs used by programs

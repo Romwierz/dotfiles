@@ -1,6 +1,6 @@
 # dotfiles
 
-*dotfiles* managed with [GNU Stow](https://www.gnu.org/software/stow/).
+*dotfiles* managed by [GNU Stow](https://www.gnu.org/software/stow/).
 
 *Stow* is a tool that creates symlinks to the contents of *packages* from *stow directory* inside *target directory*.
 
