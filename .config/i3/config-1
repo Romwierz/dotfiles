@@ -309,7 +309,7 @@
 	bindsym $mod+$smod+q kill
 
 	# Lock the system
-	bindsym $mod+Shift+x exec i3lock --color "$wm_color_background"
+	bindsym $mod+Shift+x exec i3lock --color "$wm_color_background" && exec xset dpms force off
 
 	# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 	bindsym $mod+$smod+r restart
