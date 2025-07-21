@@ -28,6 +28,7 @@
     },
     "latex-workshop.view.pdf.external.viewer.command": "qpdfview",
     "latex-workshop.view.pdf.viewer": "external",
-    "telemetry.feedback.enabled": false
+    "telemetry.feedback.enabled": false,
+    "diffEditor.ignoreTrimWhitespace": false
     // "terminal.integrated.enableImages": true
 }
