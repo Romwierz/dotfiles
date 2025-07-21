@@ -18,6 +18,8 @@ local-send
 qpdfview
 
 manpages-dev
+manpages-posix
+manpages-posix-dev
 
 fonts
 
