@@ -320,6 +320,12 @@
 	# Exit i3 (logs you out of your X session)
 	bindsym $mod+$smod+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+	# Show help on everything about using this device
+	# bindsym $mod+$smod+question qpdfview ~/Documents/how-to-use-this-pc.pdf
+	# bindsym $mod+F1 exec qpdfview ~/Documents/how-to-use-this-pc.pdf
+	bindsym $mod+$smod+question exec "/opt/marktext-x86_64.AppImage ~/Documents/how-to-use-this-pc.md"
+	bindsym $mod+F1 exec "/opt/marktext-x86_64.AppImage ~/Documents/how-to-use-this-upc.md"
+
 ### Screenshots ###
 	# Capture a screenshot of the selected region and save it in the clipboard:
     bindsym $mod+$smod+F12 exec "maim --select | xclip -selection clipboard -t image/png && notify-send -t 1500 'Screenshot copied to clipboard!'"
