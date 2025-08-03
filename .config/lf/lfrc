@@ -194,8 +194,9 @@
     map md mkdir
     # map o to open file in main app (like VS Code as main code editor)
     map o open1 $f
-    # map <right> to open text file in quick editor (like nano/micro/vim)
+    # map <right> and l to open text file in quick editor (like nano/micro/vim)
     map <right> open_quick $f
+    map l open_quick $f
 
     # Movement
     map gc cd ~/.config
