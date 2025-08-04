@@ -49,7 +49,7 @@
   // === Vim ===
   // VSCodeVim settings
   "vim.easymotion": false,
-  "vim.useSystemClipboard": false, // how does it work???
+  "vim.useSystemClipboard": true, // how does it work???
   "vim.useCtrlKeys": true,
   "vim.highlightedyank.enable": true,
   "vim.handleKeys": {
