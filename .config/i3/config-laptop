@@ -4,7 +4,7 @@
 ### Variables for settings (including colors) ###
 	set $mod                             Mod4
 	set $smod                            Shift
-	set $wm_setting_font                 pango:monospace, FontAwesome 11
+	set $wm_setting_font                 pango:monospace, FontAwesome 14
 	set $wm_setting_border_size          0
 	set $wm_setting_key_left1            Left
 	set $wm_setting_key_left2            h
@@ -31,7 +31,7 @@
 
 	set $bar_setting_position            bottom
 	set $bar_setting_mode                dock
-	set $bar_setting_font                pango:monospace, FontAwesome 10
+	set $bar_setting_font                pango:monospace, FontAwesome 15
 	set $bar_setting_separator           "|"
 	set $bar_setting_statusCommand       "i3blocks -c ~/.config/i3blocks.conf"
 
@@ -77,7 +77,7 @@
 		exec_always feh --bg-scale ~/Media/Pictures/Wallpapers/active_wallpaper
 		
 		# Set refresh rate
-		exec xrandr --output DP-0 --mode 1920x1080 --rate 144.00
+		exec xrandr --output DP-0 --mode 1920x1080 --rate 144.00 --dpi 158
 		
 		# Run Redshift
 		exec redshift -c ~/.config/redshift.conf
