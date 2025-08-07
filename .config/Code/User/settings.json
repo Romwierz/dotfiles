@@ -31,6 +31,7 @@
       "*.pdf": "latex-workshop-pdf-hook"
   },
   "window.commandCenter": false,
+  "explorer.autoReveal": false,
 
   // === Misc ===
   "telemetry.feedback.enabled": false,
@@ -125,4 +126,5 @@
   "vim.gdefault": true,
   "vim.hlsearch": true,
   "vim.incsearch": true,
+  "workbench.layoutControl.enabled": false,
 }
