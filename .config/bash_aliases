@@ -1,41 +1,44 @@
 #!bin/bash
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+### Misc
+    # Enable color support of ls and also add handy aliases
+    if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+        alias ls='ls --color=auto'
+        #alias dir='dir --color=auto'
+        #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto' \
-        fgrep='fgrep --color=auto' \
-        egrep='egrep --color=auto'
-fi
+        alias grep='grep --color=auto' \
+            fgrep='fgrep --color=auto' \
+            egrep='egrep --color=auto'
+    fi
 
-# some more ls aliases
-alias ll='ls -alF' \
-    la='ls -A' \
-    l='ls -CF'
+    # Some more ls aliases
+    alias ll='ls -alF' \
+        la='ls -A' \
+        l='ls -CF'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+    # Add an "alert" alias for long running commands. Use like so:
+    #   sleep 10; alert
+    alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-export EDITOR=code
-export EDITOR_QUICK=vim
-export PAGER=bat
+    export EDITOR=code
+    export EDITOR_QUICK=vim
+    export PAGER=bat
 
-alias ka="killall" \
-    e="$EDITOR" \
-    sdn="pkill --full '/opt/brave.com/brave/brave --disable-lcd-text' && shutdown now" \
-    rbtn="pkill --full '/opt/brave.com/brave/brave --disable-lcd-text' && shutdown -r now" \
-    ls="ls -hN --color=auto --group-directories-first" \
-    grep="grep --color=auto" \
-    diff="diff --color=auto" \
-    cp="cp -iv"
+    alias ka="killall" \
+        e="$EDITOR" \
+        sdn="pkill --full '/opt/brave.com/brave/brave --disable-lcd-text' && shutdown now" \
+        rbtn="pkill --full '/opt/brave.com/brave/brave --disable-lcd-text' && shutdown -r now" \
+        ls="ls -hN --color=auto --group-directories-first" \
+        grep="grep --color=auto" \
+        diff="diff --color=auto" \
+        cp="cp -iv"
 
-# open a file with editor
-se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDITOR" ;}
+    # Open a file with editor
+    se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDITOR" ;}
+
+    alias less="less -i"
 
 ### Movement
     alias gc="cd ~/.config" \
@@ -48,6 +51,7 @@ se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDIT
         gs="cd ~/.scripts" \
         g.="cd ~/dotfiles" \
         gn="cd ~/Notes" \
+        gl="cd ~/.local" \
         gt="cd ~/.trash" \
         gb="cd -"
 
@@ -66,5 +70,7 @@ se() { du -a ~/.scripts/* ~/.config/* | awk '{print $2}' | fzf | xargs -r "$EDIT
         giti="git init" \
         gitcl="git clone"
 
-### Misc
-    alias less="less -i"
+
+### Systemd
+    alias sctl="systemctl"
+    alias sctl="systemctl --user"
