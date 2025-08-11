@@ -28,6 +28,7 @@
   "workbench.preferredLightColorTheme": "Visual Studio Light",
   "workbench.preferredDarkColorTheme": "Vim Dark Soft",
   "workbench.panel.opensMaximized": "always",
+  "workbench.layoutControl.enabled": false,
   "workbench.editorAssociations": {
       "*.pdf": "latex-workshop-pdf-hook"
   },
@@ -36,6 +37,9 @@
 
   // === Misc ===
   "telemetry.feedback.enabled": false,
+  "files.associations": {
+    "*.service": "ini"
+  },
 
   // === Build System & Language Tools ===
   "makefile.configureOnOpen": true,
@@ -127,5 +131,4 @@
   "vim.gdefault": true,
   "vim.hlsearch": true,
   "vim.incsearch": true,
-  "workbench.layoutControl.enabled": false,
 }
