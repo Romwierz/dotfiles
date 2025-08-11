@@ -1,7 +1,8 @@
 {
   // === Editor ===
   "editor.fontSize": 13,
-  "editor.minimap.autohide": true,
+  "editor.minimap.autohide": "mouseover",
+  "editor.minimap.enabled": false,
   "editor.lineNumbers": "relative",
   "editor.tokenColorCustomizations": {
       "comments": {
