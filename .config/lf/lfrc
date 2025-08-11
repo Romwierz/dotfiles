@@ -209,6 +209,7 @@
     map gs cd ~/.scripts
     map g. :cd ~/dotfiles; set hidden true
     map gn cd ~/Notes
+    map gl cd ~/.local
     map gt cd ~/.trash
     map gb :mark-load "\'"
 
