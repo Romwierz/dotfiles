@@ -327,13 +327,19 @@
 
 ### Screenshots ###
 	# Capture a screenshot of the selected region and save it in the clipboard:
-    bindsym $mod+$smod+F12 exec "maim --select | xclip -selection clipboard -t image/png && notify-send -t 1500 'Screenshot copied to clipboard!'"
+    bindsym $mod+$smod+F12 exec "maim --select > /tmp/clipboard.png; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'"
+    bindsym $mod+$smod+p exec "maim --select > /tmp/clipboard.png; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'"
 
 	# Capture a screenshot and save it to the given path and in the clipboard:
 	# bindsym $mod+F12 exec "maim | tee $HOME/$(date +%F___%T | tr ':' '-').png | xclip -selection clipboard -t image/png && notify-send -t 1500 'Screenshot copied to clipboard!'"
-	# or without saving
-	bindsym $mod+F12 exec "maim | xclip -selection clipboard -t image/png && notify-send -t 1500 'Screenshot copied to clipboard!'"
+	# or save every screenshot under the same name in /tmp:
+    bindsym $mod+F12 exec "maim > /tmp/clipboard.png; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'"
+    bindsym $mod+p exec "maim > /tmp/clipboard.png; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'"
 
 	# Click a pixel or draw a selection for average color
 	# it is not accurate solution
-	bindsym $mod+F11 exec "maim -st 0 | tee $HOME/color.png | convert - -colorspace sRGB -resize 1x1\! -format '#%[hex:p{0,0}]' info:- | xclip -selection clipboard"
+	bindsym $mod+F11 exec "maim -st 0 | tee $HOME/.last_color.png | convert - -colorspace sRGB -resize 1x1\! -format '#%[hex:p{0,0}]' info:- | xclip -selection clipboard"
