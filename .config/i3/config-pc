@@ -72,6 +72,8 @@
 		
 		# Set Keyboard layout
 		exec setxkbmap -layout pl
+		# Adjust typematic delay and rate
+		exec xset r rate 300 50
 		
 		# Set wallpaper
 		# execute always so wallpaper can be changed on i3 refresh
