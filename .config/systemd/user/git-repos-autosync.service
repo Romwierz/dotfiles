@@ -1,0 +1,23 @@
+# Automate pulling git repos after log in.
+#
+# This unit uses `notify-send` which needs notification daemon to work. 
+#
+# Notification daemon is `dunst` in this case and it has its own service under systemd.
+#
+# If 'Requires=' was used instead of 'Wants=' and this unit would be tried to be started
+# before dunst.service, it would result in the dependency failure.
+
+[Unit]
+Description=Git Repos Auto-Sync
+; Wants=dunst.service
+; After=dunst.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/.scripts/
+ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/dotfiles/
+ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/Notes/
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
