@@ -19,7 +19,6 @@
 	set $wm_setting_app_browser          "brave-browser --disable-lcd-text" 
 	set $wm_setting_app_launcher         "rofi -modi drun,run -show drun"
 	set $wm_setting_app_power_menu       "rofi -show menu -modi 'menu:rofi-power-menu --choices=shutdown/reboot/logout/lockscreen'"
-	# set $wm_setting_app_filemanager      urxvt -e bash -l -c 'source ~/.bashrc && lf'
 	set $wm_setting_app_filemanager      "gnome-terminal -- lf"
 	set $wm_setting_app_compositor       "picom"
 
