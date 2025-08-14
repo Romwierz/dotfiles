@@ -1,1 +1,1 @@
-/home/michal/dotfiles/.config/shell/profile
+.config/shell/profile
