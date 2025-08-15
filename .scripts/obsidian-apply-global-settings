@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Create symlinks to Obsidian global settings (GLOBAL_SETTINGS_DIR) in all Obsidian Vaults found in DST_DIR.
+# To be more precise, symlinks are created in VAULT_DIR/.obsidian directories.
+#
+# The purpose of this script is to ease the headache caused by Obsidian's philosophy to not using global
+# settings for all the vaults.
+#
+# How to use:
+# 1) Put the dirs and files specified below from some Obsidian Vault (VAULT/.obsidian/) into a folder of your choice
+#    and modify variable GLOBAL_SETTINGS_DIR accordingly.
+# 2) Modify variable DST_DIR. The script will search for .obsidian/ directories recursively.
+# 3) Run the script.
+#
+# Dirs and files to create symlinks to:
+# plugins/
+# snippets/
+# themes/
+# app.json
+# appearance.json
+# canvas.json
+# community-plugins.json
+# core-plugins.json
+# graph.json
+# hotkeys.json
+
+set -eo pipefail
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+RESET=$(tput sgr0)
+
+GLOBAL_SETTINGS_DIR="$HOME/.config/obsidian-settings"
+DST_DIR="$HOME/Notes"
+
+if [[ ! -d "$GLOBAL_SETTINGS_DIR" ]]; then
+    echo "${RED}Error:${RESET} directory '$GLOBAL_SETTINGS_DIR' not found."
+    exit 1
+fi
+
+if [[ ! -d "$DST_DIR" ]]; then
+    echo "${RED}Error:${RESET} directory '$DST_DIR' not found."
+    exit 1
+fi
+
+# get all vault/.obsidian directories
+OBSIDIAN_DIRS=()
+mapfile -t OBSIDIAN_DIRS < <(find "$DST_DIR" -type d -name ".obsidian")
+
+echo "Applying settings to all Obsidian Vaults in ${GREEN}${DST_DIR}/${RESET}:"
+for dir in "${OBSIDIAN_DIRS[@]}"; do
+    echo "${dir##*$DST_DIR/}"
+
+    # existing directory cannot be overwitten as symbolic link
+    # so it has to be deleted
+    rm -rf "$dir/plugins"
+    ln -s "$GLOBAL_SETTINGS_DIR/plugins" "$dir"
+    
+    rm -rf "$dir/snippets"
+    ln -s "$GLOBAL_SETTINGS_DIR/snippets" "$dir"
+    
+    rm -rf "$dir/themes"
+    ln -s "$GLOBAL_SETTINGS_DIR/themes" "$dir"
+
+    ln -sf "$GLOBAL_SETTINGS_DIR/app.json" "$dir/app.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/appearance.json" "$dir/appearance.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/canvas.json" "$dir/canvas.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/community-plugins.json" "$dir/community-plugins.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/core-plugins.json" "$dir/core-plugins.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/graph.json" "$dir/graph.json"
+    ln -sf "$GLOBAL_SETTINGS_DIR/hotkeys.json" "$dir/hotkeys.json"
+
+done
+
+exit 0
+

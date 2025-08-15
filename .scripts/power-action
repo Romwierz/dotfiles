@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Used in 'rofi-power-menu' to have more precise control
+# over what to do on power related activity.
+#
+# Tasks can be defined in 'todo-before-power-action' wrapper script. 
+
+set -e
+
+command -v todo-before-power-action >/dev/null || {
+    echo "todo-before-power-action not found" >&2
+    exit 1
+}
+
+if [[ "$1" =~ ^(logout|suspend|hibernate|reboot|shutdown)$ ]]; then
+    todo-before-power-action
+fi
+
+case "$1" in
+    (lockscreen)
+        loginctl lock-session ${XDG_SESSION_ID-}
+        ;;
+    (logout)
+        loginctl terminate-session ${XDG_SESSION_ID-}
+        ;;
+    (suspend)
+        systemctl suspend
+        ;;
+    (hibernate)
+        systemctl hibernate
+        ;;
+    (reboot)
+        systemctl reboot
+        ;;
+    (shutdown)
+        systemctl poweroff
+        ;;
+    (*)
+        echo "Unknown action: $1" >&2
+        exit 1
+        ;;
+esac

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Define tasks to be done on power related activity.
+
+# kill brave
+pkill --full '/opt/brave.com/brave/brave --disable-lcd-text'
+sleep 1
+
+# upload notes to remote repo
+git-repo-sync push-notes
+
+exit 0

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+CONFIG_DIR="$HOME/.config/i3"
+CONFIG_FILE="$1"
+
+if [[ -z "$CONFIG_FILE" ]]; then
+  echo "Usage: $(basename "$0") <config_file>"
+  echo "Available configs:"
+  ls "$CONFIG_DIR" | grep ^config | grep -v '^config$' | sed 's/^/  /'
+  exit 1
+fi
+
+if [[ ! -f "$CONFIG_DIR/$CONFIG_FILE" ]]; then
+  echo "File $CONFIG_FILE does not exist in $CONFIG_DIR"
+  exit 2
+fi
+
+ln -sfT "$CONFIG_DIR/$CONFIG_FILE" "$CONFIG_DIR/config"
+echo "i3 configuration changed to $CONFIG_FILE"
+echo "You can now restart/reload i3."

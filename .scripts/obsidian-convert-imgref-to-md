@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+
+# Convert names of the images (both filenames themselves and their usage in files' content)
+# used in Obsidian and move them into {VAULT_NAME}/images/
+# Images are assumed to have name format 'Pasted image *.png'
+# Usage: convert-obisdian-images-to-md [-v]
+
+set -eo pipefail
+
+VERBOSE=0
+
+VAULT_DIRS=()
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            (-v|--verbose)
+                VERBOSE=1
+                shift
+                ;;
+            (*)
+                if [[ ! -d "$1" ]]; then
+                    echo "Warning: vault dir '$1' not found." >&2
+                    shift
+                    continue
+                fi
+                VAULT_DIRS+=("$1")
+                shift
+                ;;
+        esac
+    done
+}
+
+log() {
+    if [[ "$VERBOSE" -eq 1 ]]; then
+        echo "$@"
+    fi
+}
+
+read_from_stdin() {
+    if ! [ -t 0 ]; then
+        while IFS= read -r dir; do
+            VAULT_DIRS+=("$dir")
+        done
+    fi
+}
+
+# in case there are nested vault directories
+get_all_vault_dirs() {
+    ALL_VAULT_DIRS=()
+    for dir in "${VAULT_DIRS[@]}"; do
+        found=()
+        
+        # find all vault directories (it has .obsidian/ subdirectory)
+        mapfile -t found < <(find "$dir" -type d -name ".obsidian")
+
+        # remove trailing '.obsidian'
+        ALL_VAULT_DIRS+=("${found[@]%.obsidian}")
+    done
+}
+
+# Find and convert filenames that match pattern 'Pasted image *.png' into 'pasted_image_*.png'
+# and move them into images/
+convert_filenames() {
+    mapfile -t files < <(find "$1" -type f -name "Pasted image *.png")
+    
+    for file in "${files[@]}"; do
+        echo "$file"
+
+        # Replace spaces with underscores
+        local dir=$(dirname "$file")
+        local base=$(basename "$file")
+        local new_base=$(echo "$base" | sed 's/Pasted image/pasted_image/' | tr ' ' '_')
+        local new_path="$dir/$new_base"
+
+        # Rename file
+        mv "$file" "$new_path"
+        log "Renamed: $file -> $new_path"
+
+        # Move file into images/ if it's not already there
+        if [[ "$dir" != */images ]]; then
+            mv "$new_path" "${1}/images/"
+            log "Moved to ${1}/images/: $new_base"
+        fi
+    done
+}
+
+# Process contents of all .md files
+process_files_content() {
+    mapfile -t files < <(find "$1" -type f -name "*.md")
+
+    for mdfile in "${files[@]}"; do
+        log "Processing $mdfile"
+
+        # Convert images references from '![[Pasted image *.png]]' into '![](pasted_image_*.png)'
+        sed -i \
+            's|!\[\[[Pp]asted image \([^]]*\.png\)\]\]|![](images/pasted_image_\1)|g' \
+            "$mdfile"
+
+        # Convert relative filepaths from 'pasted_image_*.png' to 'images/pasted_image_*.png'
+        sed -i \
+            's|!\[\](pasted_image_\([^]]\+\.png\))|![[images/pasted_image_\1]]|g' \
+            "$mdfile"
+    done
+}
+
+parse_args "$@"
+read_from_stdin
+
+if [[ "${#VAULT_DIRS[@]}" -eq 0 ]]; then
+        echo "Usage: convert-obisdian-images-to-md [-v] /paths-to-obsidian-vault (via stdin)"
+        exit 1
+    fi
+
+get_all_vault_dirs
+
+for dir in "${ALL_VAULT_DIRS[@]}"; do
+    # Check if it's Obsidian vault
+    if [[ ! -d "${dir}/.obsidian" ]]; then
+        echo "Error: '$dir' is not an Obsidian vault (no .obsidian/ directory inside)."
+        continue
+    fi
+
+    # Make sure images/ exists
+    mkdir -p "${dir}/images"
+
+    convert_filenames "$dir"
+    process_files_content "$dir"
+done

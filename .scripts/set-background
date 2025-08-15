@@ -1,0 +1,86 @@
+#!/bin/bash
+#
+# Set background or login screen background
+# and copy image to wallpapers directory
+# 
+# Usage: set-background [-l|--login-screen] [-r|--reload] /path-to-img
+
+set -euo pipefail
+
+SET_LOGIN_BG=false
+RELOAD=false
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            (-l|--login-screen)
+                SET_LOGIN_BG=true
+                shift
+                ;;
+            (-r|--reload)
+                RELOAD=true
+                shift
+                ;;
+            (*)
+                if [[ ! -f "$1" ]]; then
+                    echo "No such file: $1"
+                    exit 1
+                fi
+                IMG_PATH=$(realpath "$1")
+                IMG_BASENAME="${IMG_PATH##*/}"
+                shift
+                ;;
+        esac
+    done
+}
+
+# If using i3 add this line in config:
+# exec_always feh --bg-scale ~/Media/Pictures/Wallpapers/active_wallpaper
+set_background() {
+    WALLPAPERS_DIR="$HOME/Media/Pictures/Wallpapers"
+    DEST_IMG_PATH="$WALLPAPERS_DIR/$IMG_BASENAME"
+    ACTIVE_BG_PATH="$WALLPAPERS_DIR/active_wallpaper"
+
+    # Copy image into wallpapers directory
+    if [[ ! -f "$DEST_IMG_PATH" ]]; then
+        cp -v "$IMG_PATH" "$DEST_IMG_PATH" && rm "$IMG_PATH"       
+    fi
+
+    if [[ "$(readlink "$ACTIVE_BG_PATH")" == "$DEST_IMG_PATH" ]]; then
+        echo "Already set as active wallpaper."
+        exit 0
+    fi
+
+    rm -f "$ACTIVE_BG_PATH"
+    ln -sv "$DEST_IMG_PATH" "$ACTIVE_BG_PATH"
+
+    if [[ "$RELOAD" == true ]]; then
+        feh --bg-scale "$ACTIVE_BG_PATH"
+    fi
+}
+
+# Set background may be overwritten by AccountsService
+# see /var/lib/AccountsService/users/$(whoami)
+# 'BackgroundFile=...' line must be deleted
+set_login_background() {
+    WALLPAPERS_DIR="/usr/share/backgrounds"
+
+    sudo cp --update -v "$IMG_PATH" "$WALLPAPERS_DIR"
+    sudo chown root:root "${WALLPAPERS_DIR}/${IMG_BASENAME}"
+    sudo chmod 644 "${WALLPAPERS_DIR}/${IMG_BASENAME}"
+    sudo sed -i "s|^background=.*|background=${WALLPAPERS_DIR}/${IMG_BASENAME}|" /etc/lightdm/slick-greeter.conf
+}
+
+parse_args "$@"
+
+if [[ -z "${IMG_PATH:-}" ]]; then
+    echo "Usage: set-background [-l|--login-screen] [-r|--reload] /path-to-img"
+    echo "Warning: to set login background you might need to delete 'BackgroundFile=...' line in a '/var/lib/AccountsService/users/\$(whoami)' file"
+    exit 0
+fi
+
+if [[ "$SET_LOGIN_BG" == true ]]; then
+    set_login_background
+else
+    set_background
+fi

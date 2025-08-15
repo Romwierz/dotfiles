@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Restore backups by replacing the original file with its .bak version
+# Usage: restore-backups BAK_FILES... or via stdin
+
+# -e: exit on error
+# -u: unset variables
+# -o pipefail: exit if any command in a pipe fails
+set -euo pipefail
+
+FILES=()
+
+# Read files from stdin if piped
+# -t stands for file descriptor FD, 0 is terminal
+# So if FD is terminal than data IS NOT piped
+if ! [ -t 0 ]; then
+    while IFS= read -r line; do
+        FILES+=("$line")
+    done
+fi
+
+# Append positional arguments
+FILES+=("$@")
+
+if [[ "${#FILES[@]}" -eq 0 ]]; then
+    echo "Error: No input files provided."
+    echo "Usage: restore-backups <file1.bak> [file2.bak ...] or via stdin"
+    exit 1
+fi
+
+for BAKFILE in "${FILES[@]}"; do
+    if [[ ! -f "$BAKFILE" ]]; then
+        echo "Skipping: '$BAKFILE' (not found)"
+        continue
+    fi
+
+    if [[ "$BAKFILE" != *.bak ]]; then
+        echo "Skipping: '$BAKFILE' (not a .bak file)"
+        continue
+    fi
+
+    ORIGINAL="${BAKFILE%.bak}"
+
+    echo "Restoring: $ORIGINAL <- $BAKFILE"
+    cp -- "$BAKFILE" "$ORIGINAL"
+done

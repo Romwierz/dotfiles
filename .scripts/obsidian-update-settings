@@ -1,0 +1,256 @@
+#!/bin/bash
+#
+# Search for .obsidian/ in SRC_DIR and copy its content into .obsidian/ in DST_DIR
+# Only specific folders in .obsidian/ are copied
+# 
+# Usage: obsidian-update-settings [-n|--dry-run] [-v|--verbose] [-r|--recursive] -s|--source SRC_DIR DST_DIR... or via stdin
+# 
+# Use --recursive option to search for .obsidian/ recursively
+# Use --verbose option to see what files are being copied 
+# 
+# Suggested usage if SRC_DIR and DST_DIRS are in the same directory:
+#   ls | grep -v ^SRC_DIR$ | obsidian-update-settings -r -s SRC_DIR
+#
+# Files and folders from .obsidian/ to copy:
+#   plugins/*
+#   themes/*
+#   community-plugins.json/
+#   core-plugins.json/
+#   hotkeys.json/
+#
+# Files from .obsidian/ not to copy:
+#   app.json
+#   appearance.json
+#   bookmarks.json
+#   canvas.json
+#   graph.json
+#   workspace.json
+#
+# ---------- TODO ----------
+# - display information if all files in DST_SIR are already up-to-date
+# - possibility to put options together (-nvrs)
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+RESET=$(tput sgr0)
+
+set -euo pipefail
+
+DRY_RUN=false
+VERBOSE=false
+RECURSIVE=false
+SRC_DIR=""
+DST_DIRS=()
+
+print_usage() {
+    echo "Usage: $(basename "$0") [OPTION] -s SRC_DIR DST_DIRS..."
+    echo "  or DST_DIRS via stdin"
+    echo ""
+    echo "Options:"
+    echo "  -n, --dry-run"
+    echo "  -v, --verbose"
+    echo "  -r, --recursive"
+    echo "  -s, --source"
+    echo ""
+    echo "Examples:"
+    echo "  while in catalog with obsidian vaults:"
+    echo "  ls | grep -v ^SRC_DIR$ | obsidian-update-settings -v -r -s SRC_DIR"
+    echo "  or while anywhere:"
+    echo "  ls DIR_WITH_VAULTS | grep -v ^SRC_DIR$ | obsidian-update-settings -v -r -s SRC_DIR"
+}
+
+# use heredoc to print usage
+# '-' before 'END' removes tab in the beginning of each heredoc line (doesn't work)
+print_usage_heredoc() {
+cat <<-END
+Usage: $(basename "$0") [OPTION] -s SRC_DIR DST_DIRS...
+  or DST_DIRS via stdin
+
+Options:
+  -n, --dry-run
+  -v, --verbose
+  -r, --recursive
+  -s, --source"
+
+Examples:
+  while in catalog with obsidian vaults:
+  ls | grep -v ^SRC_DIR$ | obsidian-update-settings -v -r -s SRC_DIR
+  or while anywhere:
+  ls DIR_WITH_VAULTS | grep -v ^SRC_DIR$ | obsidian-update-settings -v -r -s SRC_DIR
+END
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            (-h|--help)
+                print_usage_heredoc
+                exit 0
+                ;;
+            (-n|--dry-run)
+                DRY_RUN=true
+                shift
+                ;;
+            (-v|--verbose)
+                VERBOSE=true
+                shift
+                ;;
+            (-r|--recursive)
+                RECURSIVE=true
+                shift
+                ;;
+            (-s|--source)
+                shift
+                if [[ -z "${1:-}" ]]; then
+                    echo "${RED}Error:${RESET} -T requires a directory argument." >&2
+                    exit 1
+                fi
+                if [[ ! -d "$1" ]]; then
+                    echo "${RED}Error:${RESET} $1 is not a directory." >&2
+                    exit 1
+                fi
+                SRC_DIR="$1"
+                shift
+                ;;
+            (*)
+                if [[ ! -d "$1" ]]; then
+                    echo "${YELLOW}Warning:${RESET} dest dir '$1' not found." >&2
+                    shift
+                    continue
+                fi
+                DST_DIRS+=("$1")
+                shift
+                ;;
+        esac
+    done
+}
+
+read_from_stdin() {
+    if ! [ -t 0 ]; then
+        while IFS= read -r line; do
+            DST_DIRS+=("$line")
+        done
+    fi
+}
+
+validate_input() {
+    if [[ -z "$SRC_DIR" ]]; then
+        echo "${RED}Error:${RESET} missing source folder argument."
+        print_usage_heredoc
+        exit 1
+    fi
+
+    SRC_OBSIDIAN_DIR="$SRC_DIR/.obsidian"
+    if [[ ! -d "$SRC_OBSIDIAN_DIR" ]]; then
+        echo "${RED}Error:${RESET} source directory '$SRC_OBSIDIAN_DIR' not found."
+        exit 1
+    fi
+
+    if [[ "${#DST_DIRS[@]}" -eq 0 ]]; then
+        echo "${RED}Error:${RESET} no destination directories specified."
+        exit 1
+    fi
+
+    if [[ ! -d "$SRC_OBSIDIAN_DIR/plugins" && ! -d "$SRC_OBSIDIAN_DIR/themes" ]]; then
+        echo "${YELLOW}Warning:${RESET} source directories '$SRC_OBSIDIAN_DIR/plugins' or '$SRC_OBSIDIAN_DIR/themes' not found."
+    fi
+}
+
+display_dry_run_info() {
+    if [[ "$DRY_RUN" == true ]]; then
+        echo ""
+        echo "[DRY RUN] No files will be modified."
+        echo ""
+    fi
+}
+
+get_all_dst_obsidian_dirs() {
+    ALL_DST_OBSIDIAN_DIRS=()
+    for dir in "${DST_DIRS[@]}"; do
+        found=()
+        if [[ "$RECURSIVE" == true ]]; then
+            mapfile -t found < <(find "$dir" -type d -name ".obsidian")
+        else
+            if [[ -d "$dir/.obsidian" ]]; then
+                found=("$dir/.obsidian")
+            fi
+        fi
+        ALL_DST_OBSIDIAN_DIRS+=("${found[@]}")
+    done
+}
+
+# Check if SRC_DIR is also any of DST_DIRS
+validate_src_dir() {
+    src_real=$(realpath "$SRC_DIR")
+    for dst in "${DST_DIRS[@]}"; do
+        dst_real=$(realpath "$dst")
+        
+        if [[ "$dst_real" == "$src_real" || "$dst_real" == "$src_real/"* ]]; then
+            echo "${RED}Error:${RESET} destination '$dst' is the same as or inside source directory '$SRC_DIR'."
+            echo "This could cause recursive copying or unwanted overwrites."
+            exit 1
+        fi
+    done
+}
+
+copy_obsidian_settings_into() {
+    local up_to_date=FALSE
+    
+    local dest_obsidian="$1"
+    local cp_options=(--recursive --update)
+
+    if [[ "$VERBOSE" == true ]]; then
+        cp_options+=(-v)
+        # echo "cp options: ${cp_options[*]}"
+    fi
+
+    echo "${GREEN}Applying settings to:${RESET} $dest_obsidian"
+
+    mkdir -p "$dest_obsidian/plugins" "$dest_obsidian/themes" "$dest_obsidian/snippets"
+
+    cp "${cp_options[@]}" -t "$dest_obsidian/plugins/" "$SRC_OBSIDIAN_DIR/plugins/"*
+    cp "${cp_options[@]}" -t "$dest_obsidian/themes/" "$SRC_OBSIDIAN_DIR/themes/"*
+    cp "${cp_options[@]}" -t "$dest_obsidian/snippets/" "$SRC_OBSIDIAN_DIR/snippets/"*
+
+    safe_copy_json_into "$dest_obsidian"
+
+    echo ""
+}
+
+safe_copy_json_into() {
+    local dst="$1"
+    for file in community-plugins.json core-plugins.json hotkeys.json; do
+        local src="$SRC_OBSIDIAN_DIR/$file"
+        if [[ -f "$src" ]]; then
+            cp "$cp_options" -t "$dst" "$src" 
+        else
+            echo "${YELLOW}Warning:${RESET} $src not found. Skipping." >&2
+        fi
+    done
+}
+
+parse_args "$@"
+read_from_stdin
+validate_input
+display_dry_run_info
+get_all_dst_obsidian_dirs
+validate_src_dir
+
+# --- Apply settings ---
+for dest_obsidian in "${ALL_DST_OBSIDIAN_DIRS[@]}"; do
+
+    if [[ "$DRY_RUN" == true ]]; then
+        echo "Would create: $dest_obsidian/plugins"
+        echo "Would create: $dest_obsidian/themes"
+        echo "Would copy plugins/*"
+        echo "Would copy themes/*"
+        echo "Would copy JSON settings"
+        echo ""
+    else
+        copy_obsidian_settings_into "$dest_obsidian"
+    fi
+
+done
+
+echo "You can now reload Obsidian window.

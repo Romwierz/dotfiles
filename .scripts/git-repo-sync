@@ -1,0 +1,100 @@
+#!/bin/env bash
+
+# The purpose of this script is to automate uploading (stage, commit, push) local git repo to remote repo
+# and downloading from remote repo to local repo.
+#
+# Upload (push) function is dedicated for a folder with notes. And download function (pull) can be applied
+# to any git repo.
+#
+# Since notes may contain images, another script 'obsidian-convert-imgref-to-md' is also used
+# so images references have appropiate format used in Markdown.
+#
+# The intention is to use this script on power related activity.
+
+set -o pipefail
+
+NOTES_DIR="$HOME/Notes"
+GIT_REPO_DIR=""
+
+push_notes=0
+pull=0
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            (push-notes)
+                push_notes=1
+                shift
+                ;;
+            (pull)
+                pull=1
+                shift
+                ;;
+            (*)
+                if [[ -d "$1" ]]; then
+                    GIT_REPO_DIR="$1"
+                    shift
+                    continue
+                fi
+                shift
+                ;;
+        esac
+    done
+}
+
+# full paths are needed for 'obsidian-convert-imgref-to-md' in case of running outside notes directory
+get_modified_dirs_full_paths() {
+    mapfile -t modified_dirs < <( \
+        git -C "$NOTES_DIR" status --porcelain -z \
+        | tr '\0' '\n' \
+        | sed 's/^...//' \
+        | cut -d/ -f1 \
+        | sort -u \
+    )
+    modified_dirs_full_paths=()
+    for dir in "${modified_dirs[@]}"; do
+        modified_dirs_full_paths+=("$NOTES_DIR/$dir")
+    done
+}
+
+pull() {
+    pull_result=$(git -C "$1" pull origin main)
+    pull_status=$?
+
+    if [[ ! "$pull_status" == 0 ]]; then
+        notify-send -t 30000 "git-repo-sync: ${pull_result}"
+    fi
+}
+
+push-notes() {
+    get_modified_dirs_full_paths
+
+    echo "Modified folders:"
+    echo "${modified_dirs_full_paths[@]}"
+    obsidian-convert-imgref-to-md -v "${modified_dirs_full_paths[@]}"
+
+    # phase 0: display status
+    echo "Status:"
+    git -C "$NOTES_DIR" status -s
+
+    # phase 1: stage
+    git -C "$NOTES_DIR" add .
+    echo "Status after stage:"
+    git -C "$NOTES_DIR" status -s
+
+    # phase 2: commit
+    git -C "$NOTES_DIR" commit -m "update"
+    echo "Status after commit:"
+    git -C "$NOTES_DIR" status
+
+    # phase 3: push
+    git -C "$NOTES_DIR" push
+    echo "Status after push:"
+    git -C "$NOTES_DIR" status
+}
+
+parse_args "$@"
+
+[[ "$push_notes" == 1 ]] && push-notes
+
+[[ "$pull" == 1 && -n "$GIT_REPO_DIR" ]] && pull "$GIT_REPO_DIR"
