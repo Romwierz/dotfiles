@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=PDF Reader
+Exec=gtk-launch qpdfview %F
+Icon=qpdfview
+Categories=Office;Viewer;

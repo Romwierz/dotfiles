@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Record
+Exec=record &
+Type=Application
+GenericName=Start/stop recording screen
