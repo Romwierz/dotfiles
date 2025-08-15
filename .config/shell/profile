@@ -35,6 +35,13 @@
         PATH="$PATH:$HOME/.scripts"
     fi
 
+### Default programs
+    export EDITOR=code
+    export EDITOR_QUICK=vim
+    export TERMINAL=gnome-terminal
+    export BROWSER="brave-browser --disable-lcd-text"
+    export PAGER=bat
+
 ### Misc
     # Required for customizing appearance in Qt6 apps (like qpdfview) using i3wm
     export QT_QPA_PLATFORMTHEME=qt6ct
