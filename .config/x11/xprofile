@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# This file is run by several DMs (including LightDM) before WM is started.
+# If you use startx/xinit like a Chad, this file will also be sourced.
+
+# HiDPI displays may require DPI adjustment to be more comfortable to read.
+# If it is the case adjust it below using device's hostname or just use a value determined by X Server.
+# There are also two things to bear in mind:
+#  1) xrandr sets the X Server DPI but there is also the font DPI that can be set using Xft.dpi in a file
+#     loaded by xrdb (e.g. i3wm reads this property).
+#  2) Some applications may still use its own DPI configuration.
+case "$(hostname)" in
+	(thinkpad)
+		xrandr --dpi 158
+		xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources-laptop & xrdbpid=$!
+		;;
+	(*)
+		;;
+esac
+
+# set-background &
+
+autostart=""
+
+for program in $autostart; do
+	pidof -sx "$program" || "$program" &
+done >/dev/null 2>&1
+
+# Ensure that xrdb has finished running before moving on to start the WM/DE.
+[ -n "$xrdbpid" ] && wait "$xrdbpid"
