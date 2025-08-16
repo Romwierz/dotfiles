@@ -76,7 +76,7 @@
 		
 		# Set wallpaper
 		# execute always so wallpaper can be changed on i3 refresh
-		exec_always feh --bg-scale ~/Media/Pictures/Wallpapers/active_wallpaper
+		exec_always feh --no-fehbg --bg-scale ~/Media/Pictures/Wallpapers/active_wallpaper
 		
 		# Set refresh rate
 		exec xrandr --output DP-0 --mode 1920x1080 --rate 144.00

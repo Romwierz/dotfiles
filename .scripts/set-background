@@ -8,7 +8,7 @@
 set -euo pipefail
 
 SET_LOGIN_BG=false
-RELOAD=false
+RELOAD=true
 
 parse_args() {
     while [[ $# -gt 0 ]]; do
@@ -55,7 +55,7 @@ set_background() {
     ln -sv "$DEST_IMG_PATH" "$ACTIVE_BG_PATH"
 
     if [[ "$RELOAD" == true ]]; then
-        feh --bg-scale "$ACTIVE_BG_PATH"
+        feh --no-fehbg --bg-scale "$ACTIVE_BG_PATH"
     fi
 }
 
