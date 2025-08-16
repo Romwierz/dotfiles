@@ -45,17 +45,20 @@
 ### Misc
     # Required for customizing appearance in Qt6 apps (like qpdfview) using i3wm
     export QT_QPA_PLATFORMTHEME=qt6ct
-
+    
     # Display icons in lf file manager
     LF_ICONS_FILE="$HOME/.config/lf/icons"
     if [ -f "$LF_ICONS_FILE" ]; then
         source "$LF_ICONS_FILE"
     fi
-
+    
     export XDG_CONFIG_HOME="$HOME/.config"
     export XDG_DATA_HOME="$HOME/.local/share"
     export XDG_CACHE_HOME="$HOME/.cache"
+    export XDG_STATE_HOME="$HOME/.local/state"
     export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
     
     # $HOME clean-up
+    export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+    export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
     export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
