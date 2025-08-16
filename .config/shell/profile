@@ -62,3 +62,4 @@
     export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
     export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
     export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+    export XCURSOR_PATH="$XDG_DATA_HOME/icons:/usr/share/icons"
