@@ -170,7 +170,7 @@ fi
     }
     alias h=help
 
-# git
+### git
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     c_reset='\[\033[1;32m\]'
@@ -209,3 +209,7 @@ PROMPT_COMMAND='run_on_prompt_command'
 git-root() {
 	cd "$(git proot)"	
 }
+
+### $HOME clean-up
+alias svn="svn --config-dir $XDG_CONFIG_HOME/subversion"
+alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"

@@ -63,4 +63,9 @@
     export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
     export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
     export XCURSOR_PATH="$XDG_DATA_HOME/icons:/usr/share/icons"
+    export LESSHISTFILE="$XDG_STATE_HOME/lesshst"
+    export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
+    export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME/platformio"
+    export W3M_DIR="$XDG_DATA_HOME/w3m"
     export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+

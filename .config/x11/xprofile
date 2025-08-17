@@ -26,5 +26,9 @@ for program in $autostart; do
 	pidof -sx "$program" || "$program" &
 done >/dev/null 2>&1
 
+# Keep $HOME not cluttered
+export USERXSESSIONRC="$XDG_CACHE_HOME/X11/xsessionrc"
+export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
+
 # Ensure that xrdb has finished running before moving on to start the WM/DE.
 [ -n "$xrdbpid" ] && wait "$xrdbpid"
