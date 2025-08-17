@@ -74,7 +74,7 @@
     # map r push :rename<space>
 
     # make sure trash folder exists
-    %mkdir -p ~/.trash
+    %mkdir -p "$XDG_DATA_HOME/Trash"
 
     # move current file or selected files to trash folder
     # (also see 'man mv' for backup/overwrite options)
@@ -82,21 +82,23 @@
 
     cmd trash ${{
         set -f
+        trash_dir="$XDG_DATA_HOME/Trash"
         for f in $fx; do
             name=$(basename $f)
-            if [ -e "$HOME/.trash/${name}" ]; then
-                case $(stat -c %F "$HOME/.trash/${name}") in
+            if [ -e "${trash_dir}/${name}" ]; then
+                case $(stat -c %F "${trash_dir}/${name}") in
                     "regular file"|"regular empty file") desc="File";;
                     "directory") desc="Directory";;
                     *) desc="Object";;
                 esac
-                printf "$desc with name '$name' already exists in ~/.trash. Overwrite? (y/n) "
+                printf "$desc with name '$name' already exists in $trash_dir. Overwrite? (y/n) "
                 read ans
                 [ "$ans" != "y" ] && continue
-                rm -rf "$HOME/.trash/${name}" && mv -t ~/.trash $f
+                rm -rf "${trash_dir}/${name}" && mv -t $trash_dir $f
             else
-                mv -t ~/.trash $f
+                mv -t $trash_dir $f
             fi
+            printf "$name moved to $trash_dir.\n"
         done
     }}
 
@@ -210,7 +212,7 @@
     map g. :cd ~/dotfiles; set hidden true
     map gn cd ~/Notes
     map gl cd ~/.local
-    map gt cd ~/.trash
+    map gt cd ~/.local/share/Trash
     map gb :mark-load "\'"
 
 ### Cheatsheet

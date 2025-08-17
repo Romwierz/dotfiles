@@ -48,7 +48,7 @@
         g.="cd ~/dotfiles" \
         gn="cd ~/Notes" \
         gl="cd ~/.local" \
-        gt="cd ~/.trash" \
+        gt="cd $XDG_DATA_HOME/Trash" \
         gb="cd -"
 
 ### Git
