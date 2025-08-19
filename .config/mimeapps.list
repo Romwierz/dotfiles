@@ -1,0 +1,67 @@
+# This file allows to set default applications when opening a file with xdg-open.
+#
+# Use xdg-mime to display MIME type of certain file and assign default
+# application (.desktop file) to this type by editing this file.
+# Default application can also be set using xdg-mime script but if this file is a
+# symbolic link it will be unlinked.
+#
+# Original associations can still be found in `/etc/xdg/`, `/usr/share/applications/`
+# or `/usr/local/share/applications/`.
+
+[Default Applications]
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/unknown=brave-browser.desktop
+text/html=brave-browser.desktop
+application/pdf=pdf.desktop
+image/avif=xviewer.desktop
+image/bmp=xviewer.desktop
+image/gif=img.desktop
+image/heif=xviewer.desktop
+image/jpeg=img.desktop
+image/jpg=img.desktop
+image/pjpeg=xviewer.desktop
+image/png=img.desktop
+image/svg+xml=xviewer.desktop
+image/svg+xml-compressed=xviewer.desktop
+image/tiff=xviewer.desktop
+image/vnd.wap.wbmp=xviewer.desktop
+image/webp=xviewer.desktop
+image/x-bmp=xviewer.desktop
+image/x-gray=xviewer.desktop
+image/x-icb=xviewer.desktop
+image/x-ico=xviewer.desktop
+image/x-pcx=xviewer.desktop
+image/x-png=xviewer.desktop
+image/x-portable-anymap=xviewer.desktop
+image/x-portable-bitmap=xviewer.desktop
+image/x-portable-graymap=xviewer.desktop
+image/x-portable-pixmap=xviewer.desktop
+image/x-xbitmap=xviewer.desktop
+image/x-xpixmap=xviewer.desktop
+image/jxl=org.gnome.gThumb.desktop
+image/x-tga=org.gnome.gThumb.desktop
+image/xpm=org.gnome.gThumb.desktop
+text/markdown=text.desktop
+inode/directory=file.desktop
+
+[Added Associations]
+x-scheme-handler/http=com.brave.Browser.desktop;
+application/octet-stream=org.x.editor.desktop;
+application/pdf=qpdfview.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=qpdfview.desktop;
+image/bmp=xviewer.desktop;org.gnome.gThumb.desktop;
+image/gif=xviewer.desktop;org.gnome.gThumb.desktop;
+image/jpeg=xviewer.desktop;org.gnome.gThumb.desktop;
+image/png=xviewer.desktop;org.gnome.gThumb.desktop;
+image/svg+xml=xviewer.desktop;org.gnome.gThumb.desktop;
+image/tiff=xviewer.desktop;org.gnome.gThumb.desktop;
+image/webp=xviewer.desktop;org.gnome.gThumb.desktop;
+image/x-bmp=xviewer.desktop;org.gnome.gThumb.desktop;
+image/x-ico=xviewer.desktop;org.gnome.gThumb.desktop;
+image/x-pcx=xviewer.desktop;org.gnome.gThumb.desktop;
+image/x-png=xviewer.desktop;org.gnome.gThumb.desktop;
+image/jxl=org.gnome.gThumb.desktop;
+image/x-tga=org.gnome.gThumb.desktop;
+image/xpm=org.gnome.gThumb.desktop;

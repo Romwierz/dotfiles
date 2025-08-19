@@ -38,7 +38,9 @@
   // === Misc ===
   "telemetry.feedback.enabled": false,
   "files.associations": {
-    "*.service": "ini"
+    "*.service": "ini",
+    "*.desktop": "ini",
+    "*.list": "ini"
   },
 
   // === Build System & Language Tools ===
