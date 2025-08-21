@@ -153,11 +153,10 @@
     set icons true
     set sixel true
 
-    # set previewer /home/michal/.config/lf/previewer
-    
+    # ueberzug doesn't work, ueberzugpp must be used
     set previewer ctpv
     set cleaner ctpvclear
-    # &ctpv -s $id
+    &ctpv -s $id
     &ctpvquit $id
 
 ### Custom functions

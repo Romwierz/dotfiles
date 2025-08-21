@@ -16,6 +16,7 @@ notify-send
 i3-blocks
 local-send
 qpdfview
+ueberzugpp
 
 manpages-dev
 manpages-posix
