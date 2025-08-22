@@ -8,14 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-### If running bash
-    if [ -n "$BASH_VERSION" ]; then
-        # include .bashrc if it exists
-        if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-        fi
-    fi
-
 ### Set PATH
     if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"
@@ -68,4 +60,12 @@
     export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME/platformio"
     export W3M_DIR="$XDG_DATA_HOME/w3m"
     export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+
+### If running bash
+    if [ -n "$BASH_VERSION" ]; then
+        # include .bashrc if it exists
+        if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+        fi
+    fi
 
