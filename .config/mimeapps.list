@@ -45,6 +45,8 @@ image/x-tga=org.gnome.gThumb.desktop
 image/xpm=org.gnome.gThumb.desktop
 text/markdown=text.desktop
 inode/directory=file.desktop
+video/x-matroska=video.desktop
+video/mp4=video.desktop
 
 [Added Associations]
 x-scheme-handler/http=com.brave.Browser.desktop;

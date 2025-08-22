@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Video viewer
+Exec=/usr/local/bin/devour /usr/bin/mpv --quiet --keep-open %f
