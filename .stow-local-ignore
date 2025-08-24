@@ -7,3 +7,6 @@
 ^/COPYING.*
 
 to-install.txt
+
+kbd/*
+
