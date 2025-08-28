@@ -1,0 +1,44 @@
+#!/bin/env bash
+
+# Check if certain keyboard layer is active using `keyd listen` command.
+# In this case the script checks `shift` layer, but can be easily modified to work with any other layer.
+#
+# Remember to enable and start a systemd service that writes layer state changes to a fifo:
+# `sudo systemctl enable --now keyd-listen.service`.
+# Refreshing window manager might also be required.
+#
+# If layer is active, an indicator is printed to stdout.
+# For i3bar and interval parameter set to persistent, a single output is enough.
+
+fifo=/tmp/myfifo
+service=keyd-listen.service
+
+# Exit if service is not enabled.
+if [[ $(systemctl is-enabled "$service") = disabled ]]; then
+    exit
+fi
+
+# TODO: check if service failed.
+
+# Wait until service creates a fifo.
+while [ ! -e "$fifo" ]; do
+    sleep 1
+done
+
+while true; do read last_line
+    if [[ "$last_line" != *shift ]]; then
+        continue
+    fi
+
+    if [[ "$last_line" = +shift ]]; then
+        echo "-S-"
+    elif [[ "$one_before_last_line" = -shift && "$last_line" = -shift ]]; then
+        echo " "
+    elif [[ "$two_before_last_line" != +shift && "$one_before_last_line" = +shift && "$last_line" = -shift ]]; then
+        echo " "  
+    fi
+
+    [[ -n "$one_before_last_line"  ]] && two_before_last_line="$one_before_last_line" 
+    one_before_last_line="$last_line"
+done < "$fifo"
+exit
