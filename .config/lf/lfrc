@@ -50,7 +50,7 @@
     # but using name other than 'open' $f is passed even if it'a a directory 
     cmd open1 &{{
         case $(file --mime-type -Lb $f) in
-            text/*|inode/x-empty|application/json) lf -remote "send $id \$$EDITOR \$fx";;
+            text/*|inode/x-empty|application/json|application/javascript) lf -remote "send $id \$$EDITOR \$fx";;
             inode/directory) lf -remote "send $id \$$EDITOR \$fx";;
             *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
         esac
@@ -60,7 +60,7 @@
     # for other files it has similar effect as standard open command
     cmd open_quick &{{
         case $(file --mime-type -Lb $f) in
-            text/*|inode/x-empty) lf -remote "send $id \$$EDITOR_QUICK \$fx";;
+            text/*|inode/x-empty|application/javascript) lf -remote "send $id \$$EDITOR_QUICK \$fx";;
             inode/directory) lf -remote "send $id cd '$f'";;
             *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
         esac
