@@ -1,0 +1,12 @@
+[Unit]
+Description=Keyd listen
+Wants=keyd.service
+
+[Service]
+Type=Simple
+ExecStartPre=-mkfifo /tmp/myfifo
+ExecStart=sh -c '/usr/local/bin/keyd listen >/tmp/myfifo'
+
+[Install]
+WantedBy=multi-user.target
+
