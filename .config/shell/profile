@@ -28,8 +28,9 @@
     fi
 
 ### Default programs
-    export EDITOR=code
-    export EDITOR_QUICK=vim
+    export EDITOR=nvim
+    export EDITOR_QUICK=nvim
+    export GIT_EDITOR="$EDITOR_QUICK"
     export TERMINAL=gnome-terminal
     export BROWSER="brave-browser --disable-lcd-text"
     export PAGER=bat

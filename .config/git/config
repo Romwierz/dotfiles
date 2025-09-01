@@ -9,7 +9,6 @@
     verbose = true  # add more context to commit messages
 
 [core]
-	editor = code --wait
     compression = 9
     whitespace = error
     preloadindex = true
