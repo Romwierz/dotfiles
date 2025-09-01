@@ -22,11 +22,16 @@
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
 
-# [pager]
-#     diff = diff-so-fancy | $PAGER
+[pager]
+    branch = false  # no need to use pager for git branch
+    tag = false
+    diff = diff-so-fancy | $PAGER
 
-# [diff-so-fancy]
-#     markEmptyLines = false
+[diff-so-fancy]
+    markEmptyLines = false
+
+[interactive]
+    diffFilter = diff-so-fancy --patch
 
 [init]
     defaultBranch = main
