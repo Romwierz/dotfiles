@@ -5,6 +5,10 @@ vim.cmd.colorscheme("unokai")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "Comment", { fg = "#928374" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "CursorLineSign", { bg = "none" })
 
 --- [ Options ] ---
 
@@ -60,7 +64,7 @@ vim.opt.swapfile = false                           -- Don't create swap files
 vim.opt.undofile = true                            -- Persistent undo
 --vim.opt.undodir = vim.fn.expand("~/.vim/undodir")  -- Undo directory
 vim.opt.updatetime = 300                           -- Faster completion
-vim.opt.timeoutlen = 1000                          -- Key timeout duration
+vim.opt.timeoutlen = 3000                          -- Key timeout duration
 vim.opt.ttimeoutlen = 0                            -- Key code timeout
 vim.opt.autoread = true                            -- Auto reload files changed outside vim
 vim.opt.autowrite = false                          -- Don't auto save

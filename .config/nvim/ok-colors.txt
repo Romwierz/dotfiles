@@ -1,0 +1,15 @@
+--- SPOKO MOTYWY ---
+
+wbudowane w neovima (dobre z przezroczystym tłem):
+- blue
+- darkblue
+- default
+- desert
+- evening
+- habamax
+- koehler
+- lunaperche
+- retrobox
+- slate
+- sorbet
+- wildcharm (w C ok, w Lua niezbyt)
