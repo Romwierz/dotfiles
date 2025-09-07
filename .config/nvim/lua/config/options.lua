@@ -44,6 +44,13 @@ vim.opt.splitbelow = true
 --vim.opt.foldmethod = "expr"                             -- Use expression for folding
 --vim.wo.vim.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Use treesitter for folding
 vim.opt.foldlevel = 99
+-- Tab display settings
+vim.opt.showtabline = 1                             -- Always show tabline (0=never, 1=when multiple tabs, 2=always)
+vim.opt.tabline = ''                                -- Use default tabline (empty string uses built-in)
+-- Transparent tabline appearance
+vim.cmd([[
+    hi TabLineFill guibg=NONE ctermfg=242 ctermbg=NONE
+]])
 
 -- File handling
 vim.opt.backup = false                             -- Don't create backup files
@@ -73,3 +80,16 @@ vim.opt.encoding = "UTF-8"                         -- Set encoding
 vim.g.loaded_netrw = 1; vim.g.loaded_netrw = 1     -- Disable netrw to use other file explorer
 -- Cursor settings
 --vim.opt.guicursor = "n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+
+-- Command-line completion
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
+vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar", "*.d"  })
+
+-- Better diff options
+vim.opt.diffopt:append("linematch:60")
+
+-- Performance improvements
+vim.opt.redrawtime = 10000
+vim.opt.maxmempattern = 20000
+

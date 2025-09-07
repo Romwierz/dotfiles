@@ -1,10 +1,24 @@
---- [ Keymappings ] ---
-
-vim.g.mapleader = " "                              -- Set leader key to space
-vim.g.maplocalleader = " "                         -- Set local leader key (NEW)
+-- Set leader
+vim.keymap.set("", "<Space>", "<Nop>")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Clear highligts on search
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- Copy filename
+vim.keymap.set("n", "<leader>yf", function()
+	local file = vim.fn.expand("%:t")
+	vim.fn.setreg("+", file)
+	print("copied filename:", file)
+end)
+
+-- Copy filepath
+vim.keymap.set("n", "<leader>yF", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	print("copied filepath:", path)
+end)
 
 -- Additional yanking and deleting
 vim.keymap.set("n", "Y", "y$", { desc = "Yank until EOL" })
@@ -17,11 +31,19 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 vim.keymap.set("n", "<S-g>", "<S-g>zz", { desc = "Go to the bottom (centered)" })
 
--- Buffer navigation
+-- Buffers
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>bb", ":b#<CR>", { desc = "Recent buffer" }) --recent buffer is kept in `#` register (ctrl-^ also works)
+vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
--- Better window navigation
+-- Tabs
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { desc = 'New tab' })
+vim.keymap.set('n', '<leader>tq', ':tabclose<CR>', { desc = 'Close tab' })
+
+-- Windows
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
