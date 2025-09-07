@@ -4,6 +4,7 @@ Wants=keyd.service
 
 [Service]
 Type=Simple
+ExecStartPre=-rm /tmp/myfifo
 ExecStartPre=-mkfifo /tmp/myfifo
 ExecStart=sh -c '/usr/local/bin/keyd listen >/tmp/myfifo'
 
