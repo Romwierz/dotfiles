@@ -29,7 +29,7 @@
 
 ### Default programs
     export EDITOR=nvim
-    export EDITOR_QUICK=nvim
+    export EDITOR_QUICK="nvim -c 'hi Normal guibg=none ctermbg=none | hi NormalFloat guibg=none ctermbg=none'"
     export GIT_EDITOR="$EDITOR_QUICK"
     export TERMINAL=gnome-terminal
     export BROWSER="brave-browser --disable-lcd-text"
