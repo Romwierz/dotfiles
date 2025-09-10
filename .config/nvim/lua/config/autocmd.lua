@@ -1,4 +1,3 @@
--- Basic autocommands
 local augroup = vim.api.nvim_create_augroup("UserConfig", {})
 
 -- Highlight yanked text
@@ -93,4 +92,21 @@ vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
 vim.api.nvim_create_autocmd("UILeave", {
     group = augroup,
     callback = function() io.write("\027]111\027\\") end,
+})
+
+-- Show startup time
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local startuptime = vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time))
+    vim.g.startup_time_ms = string.format("%.2f ms", startuptime * 1000)
+    print("Start-up time: " .. vim.g.startup_time_ms)
+  end,
+})
+
+-- Disable automatic comment on newline
+vim.api.nvim_create_autocmd("FileType", {
+		pattern = "*",
+		callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+		end,
 })

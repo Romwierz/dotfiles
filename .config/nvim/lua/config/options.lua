@@ -1,5 +1,3 @@
---- [ Options ] ---
-
 -- Basic settings
 vim.opt.number = true                               -- Line numbers
 vim.opt.relativenumber = true                       -- Relative line numbers
@@ -48,9 +46,8 @@ vim.opt.foldlevel = 99
 vim.opt.showtabline = 1                             -- Always show tabline (0=never, 1=when multiple tabs, 2=always)
 vim.opt.tabline = ''                                -- Use default tabline (empty string uses built-in)
 -- Transparent tabline appearance
-vim.cmd([[
-    hi TabLineFill guibg=NONE ctermfg=242 ctermbg=NONE
-]])
+vim.cmd([[ hi TabLineFill guibg=NONE ctermfg=242 ctermbg=NONE ]])
+vim.api.nvim_set_hl(0, "FoldColumn", { link = "Normal" })
 
 -- File handling
 vim.opt.backup = false                             -- Don't create backup files
