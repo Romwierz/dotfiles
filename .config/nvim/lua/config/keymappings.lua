@@ -100,5 +100,7 @@ vim.keymap.set("n", "<leader>rc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Ed
 vim.keymap.set("n", "<leader>p", switch_theme) --cycle themes
 vim.keymap.set("n", "<leader>w", ":w<CR>") --save file but q u i c k e r
 vim.keymap.set("n", "<leader>W", ":wa<CR>") --save all files (buffers)
+vim.keymap.set("n", "ZA", ":confirm wqall<CR>") --save all buffers and exit
 vim.keymap.set("n", "J", "mzJ`z") --keep cursor position when joining lines
 vim.keymap.set("n", "<leader>z", ":lua require('zen-mode').toggle()<CR>") --toggle zenmode
+vim.keymap.set("n", "<leader>s", ":%s//g<Left><Left>") --replace all

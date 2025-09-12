@@ -110,3 +110,27 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
 		end,
 })
+
+-- Set global rules for all colorschemes
+local function link(from, to)
+  vim.api.nvim_set_hl(0, from, { link = to })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    link("FoldColumn", "Normal")
+    link("SignColumn", "Normal")
+    link("@string.escape", "@string")
+    link("@function.macro", "Function")
+  end,
+})
+
+-- Set zen-mode after entering first buffer
+vim.api.nvim_create_autocmd("BufReadPre", {
+    group = augroup,
+    once = true,
+    callback = function()
+        vim.cmd("lua require('zen-mode').toggle()")
+    end,
+})
+

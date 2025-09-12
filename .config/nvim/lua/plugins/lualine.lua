@@ -78,22 +78,13 @@ options = {
 sections = {
     lualine_a = { mode },
 	lualine_b = { branch },
-	lualine_c = { filename, diagnostics },
+	lualine_c = { "filename", diagnostics },
 	lualine_x = { diff, "encoding", "fileformat", "filetype" },
 	lualine_y = { "location" },
 	lualine_z = { progress },
 	},
 
 extensions = { 'nvim-tree' },
-
-tabline = {
-    lualine_a = {},
-	lualine_b = {},
-	lualine_c = { { "buffers", icons_enabled = false } },
-	lualine_x = {},
-	lualine_y = {},
-	lualine_z = {},
-	},
 })
 
 -- transparency override if using old pywal, shouldn't be needed with 16

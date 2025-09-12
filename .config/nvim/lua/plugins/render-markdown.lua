@@ -1,7 +1,29 @@
--- icons: https://www.nerdfonts.com/cheat-sheet
+-- Icons: https://www.nerdfonts.com/cheat-sheet
 --█
+
+-- Fold lines with links (folding is visible only if a line doesn' fit on a screen)
+-- Use `zc` and `zv` to fold/unfold
+vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*.md",
+    callback = function()
+        -- Get original mark (last position before closing a file)
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lines = vim.api.nvim_buf_line_count(0)
+        for lnum = 1, lines do
+            local line = vim.fn.getline(lnum)
+            if line:match("%[[^]]*%]%([^)]*%)") and not line:match("^%s*#") then
+                vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+                vim.cmd("normal! zf$")
+            end
+        end
+        -- Go back to the original mark after folding all matched lines
+        if mark[1] > 0 and mark[1] <= lines then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
+})
+
 require('render-markdown').setup({
-    --render_modes = { 'n', 'c', 't', 'i', 'v', 'V', 's', 'no', 'CTRL-V', 'R' },
     render_modes = true,
     preset = 'obsidian',
     on = {
@@ -34,6 +56,24 @@ require('render-markdown').setup({
         width = 'block',
         left_pad = 2,
         right_pad = 2,
+        backgrounds = {
+            'RenderMarkdownH1Bg',
+            'RenderMarkdownH2Bg',
+            'RenderMarkdownH3Bg',
+            '',
+            '',
+            '',
+        },
+        -- Highlight for the heading and sign icons.
+        -- Output is evaluated using the same logic as 'backgrounds'.
+        foregrounds = {
+            'RenderMarkdownH1',
+            'RenderMarkdownH2',
+            'RenderMarkdownH3',
+            'RenderMarkdownH4',
+            'RenderMarkdownH5',
+            'RenderMarkdownH6',
+        },
     },
     code = {
         sign = false,
@@ -49,6 +89,9 @@ require('render-markdown').setup({
         below = '',
         disable_background = true,
         inline = false,
+    },
+    dash = {
+        width = 0.5,
     },
     bullet = {
         icons = { '', '○', '◆', '◇' },

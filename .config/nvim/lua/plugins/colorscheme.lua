@@ -78,11 +78,16 @@ require("gruvbox").setup({
   inverse = true, -- invert background for search, diffs, statuslines and errors
   contrast = "", -- can be "hard", "soft" or empty string
   palette_overrides = {},
-  overrides = {
-            FoldColumn = { link = "@normal" },
-            SignColumn = { link = "@normal" },
-  },
+  overrides = {},
   dim_inactive = false,
   transparent_mode = false,
 })
 
+local function link(from, to)
+    vim.api.nvim_set_hl(0, from, { link = to })
+end
+
+link("FoldColumn", "Normal")
+link("SignColumn", "Normal")
+link("@string.escape", "@string")
+link("@function.macro", "Function")
