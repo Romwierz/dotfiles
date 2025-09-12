@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=Notes
+Exec=env NVIM_MODE=notes gnome-terminal --profile=Profile1-no-transparency --working-directory=/home/michal/Notes --  nvim
+Type=Application

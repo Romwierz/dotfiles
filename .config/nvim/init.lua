@@ -143,6 +143,13 @@ require("plugins.lualine")
 require("plugins.treesitter")
 require("plugins.autopairs")
 require("plugins.fzf-lua")
-require("plugins.render-markdown")
 
 load_theme()
+
+if vim.env.NVIM_MODE == "notes" then
+    vim.opt.bg = 'light'
+    vim.cmd("colorscheme gruvbox")
+    require("lualine").setup({ options = { theme =  "gruvbox" } })
+    require("plugins.render-markdown")
+    vim.cmd("Gitsigns toggle_signs")
+end
