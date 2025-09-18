@@ -45,6 +45,7 @@
         gV="cd ~/Media/Videos" \
         gv="cd ~/Void" \
         gs="cd ~/.scripts" \
+        gS="cd ~/Studia" \
         g.="cd ~/dotfiles" \
         gn="cd ~/Notes" \
         gl="cd ~/.local" \
@@ -69,4 +70,5 @@
 
 ### Systemd
     alias sctl="systemctl"
-    alias sctl="systemctl --user"
+    alias sctlu="systemctl --user"
+

@@ -11,3 +11,5 @@ to-install.txt
 kbd/*
 
 systemd/system/*
+
+.scripts/README.md

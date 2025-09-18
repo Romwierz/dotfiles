@@ -208,6 +208,7 @@
     map gV cd ~/Media/Videos
     map gv cd ~/Void
     map gs cd ~/.scripts
+    map gS cd ~/Studia
     map g. :cd ~/dotfiles; set hidden true
     map gn cd ~/Notes
     map gl cd ~/.local
