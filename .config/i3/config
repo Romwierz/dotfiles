@@ -22,7 +22,6 @@
 	set $wm_setting_app_filemanager      "gnome-terminal -- lf"
 	set $wm_setting_app_compositor       "picom"
 
-	# In VS Code you can change language mode to PowerShell to choose the color easily
 	set $wm_color_border_active_bg       #81A1C1
 	set $wm_color_border_active_fg       #ffffff
 	set $wm_color_border_inactive_bg     #676E7D
@@ -31,7 +30,7 @@
 
 	set $bar_setting_position            bottom
 	set $bar_setting_mode                dock
-	set $bar_setting_font                pango:monospace, FontAwesome 10
+    set_from_resource $bar_setting_font i3bar_fontsize pango:monospace, FontAwesome 10
 	set $bar_setting_separator           "|"
 	set $bar_setting_statusCommand       "i3blocks -c ~/.config/i3blocks.conf"
 
@@ -67,7 +66,6 @@
 
 	# Auto-start
 		exec brave-browser --disable-lcd-text
-		exec code
 		
 		# Set Keyboard layout
 		exec_always setxkbmap -layout pl
@@ -119,7 +117,6 @@
 
 	# Assign applications to specific workspaces
 	assign [class="Brave-browser"] $ws1
-	assign [class="Code"] $ws2
 	# assign [class="Gnome-terminal"] $ws3
 	assign [class="obsidian"] $ws4
 	assign [class="steam_app_2379780" title="Balatro"] $ws8
@@ -136,7 +133,6 @@
 	# for_window [class="^MintUpdate.py$" title="^Update Manager$"] floating enable
 
 	# Assign specific layout to specific windows
-	for_window [class="Code"] layout tabbed
 	for_window [class="obsidian"] layout tabbed
 
 ### Workspaces ###
@@ -345,3 +341,4 @@
 	# Click a pixel or draw a selection for average color
 	# it is not accurate solution
 	bindsym $mod+F11 exec "maim -st 0 | tee $HOME/.last_color.png | convert - -colorspace sRGB -resize 1x1\! -format '#%[hex:p{0,0}]' info:- | xclip -selection clipboard"
+
