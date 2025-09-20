@@ -1,4 +1,4 @@
--- Auto install vim-plug and plugins if not found
+-- Auto install vim-plug if not found
 local data_dir = vim.fn.stdpath('data')
 if vim.fn.empty(vim.fn.glob(data_dir .. '/site/autoload/plug.vim')) == 1 then
 vim.cmd('silent !curl -fLo ' .. data_dir .. '/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -11,6 +11,7 @@ local Plug = vim.fn['plug#']
 
 vim.g.start_time = vim.fn.reltime()
 vim.loader.enable() --  SPEEEEEEEEEEED 
+
 vim.call('plug#begin')
 
 -- Themes
@@ -27,6 +28,12 @@ Plug('ibhagwan/fzf-lua') --fuzzy finder and grep
 Plug('folke/zen-mode.nvim') --zen-mode
 Plug('MeanderingProgrammer/render-markdown.nvim') --render md inline
 
+-- LSP stuff
+Plug 'mason-org/mason.nvim'
+Plug 'mason-org/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'saghen/blink.cmp'
+
 vim.call('plug#end')
 
 -- Load configs from different files
@@ -42,12 +49,16 @@ require("plugins.lualine")
 require("plugins.treesitter")
 require("plugins.autopairs")
 require("plugins.fzf-lua")
+require("plugins.blink")
+
+require("config.lsp")
 
 load_theme()
 
 if vim.env.NVIM_MODE == "notes" then
     vim.opt.bg = 'light'
     vim.cmd("colorscheme gruvbox")
+    ---@diagnostic disable-next-line: different-requires
     require("lualine").setup({ options = { theme =  "gruvbox" } })
     require("plugins.render-markdown")
     vim.cmd("Gitsigns toggle_signs")
