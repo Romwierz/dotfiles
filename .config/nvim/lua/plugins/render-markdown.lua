@@ -24,16 +24,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 require('render-markdown').setup({
-    render_modes = true,
-    preset = 'obsidian',
     on = {
         attach = function()
             vim.opt.cursorline = false
             vim.opt.number = false
             vim.opt.relativenumber = false
-            vim.opt.wrap = true
-            vim.opt.linebreak = true
-            vim.opt.breakindent = true
             -- display '\-' at the beginning of the line as '-'
             vim.cmd([[syn match markdownEscapeHyphen /^\zs\\\ze-/ conceal]])
             -- display '234\)' as '234)'
@@ -48,6 +43,11 @@ require('render-markdown').setup({
             vim.api.nvim_set_hl(0, "@string", { fg = "#928374" })
             vim.api.nvim_set_hl(0, "String", { fg = "#928374", bg = "NONE", italic = true })
         end,
+        render = function()
+            vim.opt.wrap = true
+            vim.opt.linebreak = true
+            vim.opt.breakindent = true
+        end
     },
     heading = {
         icons = { '', '', '', '', '', '' },
