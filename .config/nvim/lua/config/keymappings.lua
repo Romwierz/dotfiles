@@ -38,7 +38,6 @@ vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" }
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bb", ":b#<CR>", { desc = "Recent buffer" }) --recent buffer is kept in `#` register (ctrl-^ also works)
 vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
-vim.keymap.set("n", "<leader>q" , ":bdelete<CR>", { desc = "Delete buffer" })
 -- delete others: https://github.com/lukas-reineke/dotfiles/blob/master/vim/lua/buffers.lua
 
 -- Tabs
@@ -103,4 +102,5 @@ vim.keymap.set("n", "<leader>W", ":wa<CR>") --save all files (buffers)
 vim.keymap.set("n", "ZA", ":confirm wqall<CR>") --save all buffers and exit
 vim.keymap.set("n", "J", "mzJ`z") --keep cursor position when joining lines
 vim.keymap.set("n", "<leader>z", ":lua require('zen-mode').toggle()<CR>") --toggle zenmode
-vim.keymap.set("n", "<leader>s", ":%s//g<Left><Left>") --replace all
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) --replace word under cursor, <C-c> to cancel
+

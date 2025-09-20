@@ -48,6 +48,7 @@ vim.opt.tabline = ''                                -- Use default tabline (empt
 -- Transparent tabline appearance
 vim.cmd([[ hi TabLineFill guibg=NONE ctermfg=242 ctermbg=NONE ]])
 vim.api.nvim_set_hl(0, "FoldColumn", { link = "Normal" })
+vim.g.have_nerd_font = true
 
 -- File handling
 vim.opt.backup = false                             -- Don't create backup files
