@@ -20,6 +20,22 @@ vim.keymap.set("n", "<leader>yF", function()
 	print("copied filepath:", path)
 end)
 
+-- Open file under cursor (modified to use absolute path)
+local function open_cfile()
+    local path = vim.fn.expand("<cfile>")
+    if path:match("^http") then
+        vim.ui.open(path)
+    else
+        local abs = vim.fn.expand("%:p:h") .. "/" .. path
+        if vim.fn.filereadable(abs) == 1 then
+            vim.ui.open(abs)
+        else
+            print("File not found: " .. abs)
+        end
+    end
+end
+vim.keymap.set("n", "gx", open_cfile, { silent = true })
+
 -- Additional yanking and deleting
 vim.keymap.set("n", "Y", "y$", { desc = "Yank until EOL" })
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
