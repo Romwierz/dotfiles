@@ -56,4 +56,7 @@ keymap = {
       ["shift-up"]    = "preview-page-up",
     },
 },
+grep = {
+    rg_opts = "--hidden --no-ignore -g '!.git/' --column --line-number --no-heading --color=always --smart-case",
+}
 }

@@ -35,6 +35,7 @@ require('render-markdown').setup({
             vim.cmd([[syn match markdownEscapeParen /^\d\+\zs\\\ze)/ conceal]])
             -- turn '->' into '→'
             vim.cmd.iabbrev("->", "→")
+            vim.cmd.iabbrev("<-", "←")
         end,
         initial = function()
             vim.opt.bg = 'light'

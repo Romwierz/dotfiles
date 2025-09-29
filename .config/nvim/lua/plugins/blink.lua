@@ -11,6 +11,16 @@ require("blink.cmp").setup{
         },
     },
     cmdline = {
-        keymap = { preset = 'inherit' },
+        enabled = true,
+        keymap = {
+            preset = 'cmdline' ,
+            ['<Tab>'] = { 'show', 'select_next' },
+            ['<Down>'] = { 'select_next', 'fallback' },
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Right>'] = { 'select_and_accept', 'fallback' },
+            ['<Left>'] = { 'cancel', 'fallback' },
+            ['<CR>'] = { 'accept_and_enter', 'fallback' },
+        },
+        sources = { 'cmdline' },
     },
 }
