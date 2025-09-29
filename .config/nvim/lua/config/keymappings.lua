@@ -117,6 +117,6 @@ vim.keymap.set("n", "<leader>w", ":w<CR>") --save file but q u i c k e r
 vim.keymap.set("n", "<leader>W", ":wa<CR>") --save all files (buffers)
 vim.keymap.set("n", "ZA", ":confirm wqall<CR>") --save all buffers and exit
 vim.keymap.set("n", "J", "mzJ`z") --keep cursor position when joining lines
-vim.keymap.set("n", "<leader>z", ":lua require('zen-mode').toggle()<CR>") --toggle zenmode
+vim.keymap.set("n", "<leader>z", ":lua require('no-neck-pain').toggle()<CR>") --toggle zenmode
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) --replace word under cursor, <C-c> to cancel
 

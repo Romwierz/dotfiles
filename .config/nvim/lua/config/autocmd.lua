@@ -130,7 +130,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
     group = augroup,
     once = true,
     callback = function()
-        vim.cmd("lua require('zen-mode').toggle()")
+        vim.cmd("NoNeckPain")
     end,
 })
 

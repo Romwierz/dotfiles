@@ -26,6 +26,8 @@ Plug('nvim-treesitter/nvim-treesitter') --improved syntax
 Plug('windwp/nvim-autopairs') --autopairs
 Plug('ibhagwan/fzf-lua') --fuzzy finder and grep
 Plug('folke/zen-mode.nvim') --zen-mode
+--Plug ('shortcuts/no-neck-pain.nvim', { [ 'tag' ] = '*' })
+Plug ('shortcuts/no-neck-pain.nvim')
 Plug('MeanderingProgrammer/render-markdown.nvim') --render md inline
 
 -- LSP stuff
@@ -49,6 +51,7 @@ require("plugins.lualine")
 require("plugins.treesitter")
 require("plugins.autopairs")
 require("plugins.fzf-lua")
+require("plugins.no-neck-pain")
 require("plugins.blink")
 
 require("config.lsp")
