@@ -213,3 +213,8 @@ git-root() {
 ### $HOME clean-up
 alias svn="svn --config-dir $XDG_CONFIG_HOME/subversion"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
+
+### If on graphical session (X11) export $WINDOWID to be used by ctpv/ueberzugpp
+if command -v xdotool >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
+    export WINDOWID=${WINDOWID:-$(xdotool getactivewindow 2>/dev/null)}
+fi
