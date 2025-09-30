@@ -36,6 +36,36 @@ local function open_cfile()
 end
 vim.keymap.set("n", "gx", open_cfile, { silent = true })
 
+-- Paste reference to image from clipboard (for X11)
+local function paste_image()
+    local mime = vim.fn.system("xclip -selection clipboard -t TARGETS -o")
+    if not mime:match("image/png") then
+        print("Image in clipboard not found")
+        return
+    end
+
+    local file_dir = vim.fn.expand("%:p:h")
+    local image_dir = file_dir .. "/images"
+    vim.fn.mkdir(image_dir, "p")
+
+    local filename = "pasted_" .. os.date("%Y%m%d_%H%M%S") .. ".png"
+    local filepath = image_dir .. "/" .. filename
+
+    local cmd = string.format("xclip -selection clipboard -t image/png -o > %s", vim.fn.shellescape(filepath))
+    os.execute(cmd)
+
+    local relpath = "images/" .. filename
+    local link = "![](" .. relpath .. ")"
+
+    if vim.fn.mode():sub(1,1) == "i" then
+        vim.api.nvim_feedkeys(link, "n", true) --insert mode
+    else
+        vim.api.nvim_put({ link }, "c", true, true) --normal mode
+    end
+end
+vim.keymap.set("n", "<leader>p", paste_image, { desc = "Paste image from clipboard into Markdown" })
+vim.keymap.set("i", "<C-P>", paste_image, { desc = "Paste image from clipboard into Markdown" })
+
 -- Additional yanking and deleting
 vim.keymap.set("n", "Y", "y$", { desc = "Yank until EOL" })
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
