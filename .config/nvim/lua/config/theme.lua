@@ -28,3 +28,11 @@ _G.switch_theme = function()
 	local file = io.open(theme_file, "w")
 	if file then file:write(colorscheme .. "\n" .. lualine) file:close() end
 end
+
+vim.api.nvim_create_user_command(
+    "SwitchTheme",  -- nazwa polecenia (:SwitchTheme)
+    function()
+        _G.switch_theme()
+    end,
+    {}
+)

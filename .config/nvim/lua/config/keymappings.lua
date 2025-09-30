@@ -112,7 +112,6 @@ vim.keymap.set("n", "<leader>G", ":lua require('fzf-lua').grep_cword()<CR>") --g
 
 -- Misc
 vim.keymap.set("n", "<leader>rc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
-vim.keymap.set("n", "<leader>p", switch_theme) --cycle themes
 vim.keymap.set("n", "<leader>w", ":w<CR>") --save file but q u i c k e r
 vim.keymap.set("n", "<leader>W", ":wa<CR>") --save all files (buffers)
 vim.keymap.set("n", "ZA", ":confirm wqall<CR>") --save all buffers and exit
