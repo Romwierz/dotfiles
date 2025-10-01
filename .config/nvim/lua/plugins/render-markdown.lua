@@ -29,20 +29,10 @@ require('render-markdown').setup({
             vim.opt.cursorline = false
             vim.opt.number = false
             vim.opt.relativenumber = false
-            -- display '\-' at the beginning of the line as '-'
-            vim.cmd([[syn match markdownEscapeHyphen /^\zs\\\ze-/ conceal]])
-            -- display '234\)' as '234)'
-            vim.cmd([[syn match markdownEscapeParen /^\d\+\zs\\\ze)/ conceal]])
-            -- turn '->' into '→'
-            vim.cmd.iabbrev("->", "→")
+            vim.cmd([[syn match markdownEscapeHyphen /^\zs\\\ze-/ conceal]]) -- display '\-' at the beginning of the line as '-'
+            vim.cmd([[syn match markdownEscapeParen /^\d\+\zs\\\ze)/ conceal]]) -- display '234\)' as '234)'
+            vim.cmd.iabbrev("->", "→") -- turn '->' into '→'
             vim.cmd.iabbrev("<-", "←")
-        end,
-        initial = function()
-            vim.opt.bg = 'light'
-            vim.cmd("colorscheme gruvbox")
-            require("lualine").setup({ options = { theme =  "gruvbox" } })
-            vim.api.nvim_set_hl(0, "@string", { fg = "#928374" })
-            vim.api.nvim_set_hl(0, "String", { fg = "#928374", bg = "NONE", italic = true })
         end,
         render = function()
             vim.opt.wrap = true

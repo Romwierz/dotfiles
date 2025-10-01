@@ -62,10 +62,6 @@ require("plugins.which-key")
 load_theme()
 
 if vim.env.NVIM_MODE == "notes" then
-    vim.opt.bg = 'light'
-    vim.cmd("colorscheme gruvbox")
-    ---@diagnostic disable-next-line: different-requires
-    require("lualine").setup({ options = { theme =  "gruvbox" } })
     require("plugins.render-markdown")
     vim.cmd("Gitsigns toggle_signs")
 end

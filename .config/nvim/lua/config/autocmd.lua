@@ -117,12 +117,13 @@ local function link(from, to)
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    link("FoldColumn", "Normal")
-    link("SignColumn", "Normal")
-    link("@string.escape", "@string")
-    link("@function.macro", "Function")
-  end,
+    callback = function()
+        link("FoldColumn", "Normal")
+        link("SignColumn", "Normal")
+        link("@string.escape", "@string")
+        link("@function.macro", "Function")
+        vim.api.nvim_set_hl(0, "@markup.italic", { fg = "fg", italic = true })
+    end,
 })
 
 -- Set zen-mode after entering first buffer

@@ -14,7 +14,6 @@ end
 
 local themes = { --add more themes here, if installed
 	{ "catppuccin-frappe", "catppuccin-frappe" },
-	{ "catppuccin-latte", "catppuccin-latte" },
 	{ "gruvbox", "gruvbox" },
 }
 
@@ -23,6 +22,11 @@ local current_theme_index = 1
 _G.switch_theme = function()
 	current_theme_index = current_theme_index % #themes + 1
 	local colorscheme, lualine = unpack(themes[current_theme_index])
+    if colorscheme == "gruvbox" then
+        vim.opt.bg = 'light'
+    else
+        vim.opt.bg = 'dark'
+    end
 	vim.cmd("colorscheme " .. colorscheme)
 	require("lualine").setup({ options = { theme = lualine } })
 	local file = io.open(theme_file, "w")
@@ -30,7 +34,7 @@ _G.switch_theme = function()
 end
 
 vim.api.nvim_create_user_command(
-    "SwitchTheme",  -- nazwa polecenia (:SwitchTheme)
+    "SwitchTheme",
     function()
         _G.switch_theme()
     end,

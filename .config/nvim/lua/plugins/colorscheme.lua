@@ -25,6 +25,10 @@ require("catppuccin").setup({
                 ["@function.macro"] = { fg = frappe.text },
                 ["@keyword.import.c"] = { fg = frappe.mauve },
                 Label = { fg = frappe.peach, style = { "bold" } },
+                ["@markup.strong"] = { fg = frappe.mauve, style = { "bold" } },
+                ["@markup.raw"] = { fg = frappe.overlay1, style = { "italic" } },
+                ["@markup.list"] = { fg = frappe.text },
+                ["@string"] = { fg = frappe.overlay1, style = { "italic" } },
             }
         end,
         latte = function(latte)
@@ -78,7 +82,10 @@ require("gruvbox").setup({
   inverse = true, -- invert background for search, diffs, statuslines and errors
   contrast = "", -- can be "hard", "soft" or empty string
   palette_overrides = {},
-  overrides = {},
+  overrides = {
+      String = { fg = "#928374", bg = "NONE", italic = true },
+      ["@string"] = { fg = "#928374" },
+  },
   dim_inactive = false,
   transparent_mode = false,
 })
@@ -87,7 +94,3 @@ local function link(from, to)
     vim.api.nvim_set_hl(0, from, { link = to })
 end
 
-link("FoldColumn", "Normal")
-link("SignColumn", "Normal")
-link("@string.escape", "@string")
-link("@function.macro", "Function")
