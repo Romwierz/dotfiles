@@ -22,6 +22,7 @@ Plug('norcalli/nvim-colorizer.lua') --color highlight
 Plug('lewis6991/gitsigns.nvim') --git
 Plug('nvim-lualine/lualine.nvim') --statusline
 Plug('nvim-tree/nvim-web-devicons') --pretty icons
+Plug('folke/which-key.nvim') --mappings popup
 Plug('nvim-treesitter/nvim-treesitter') --improved syntax
 Plug('windwp/nvim-autopairs') --autopairs
 Plug('ibhagwan/fzf-lua') --fuzzy finder and grep
@@ -55,6 +56,8 @@ require("plugins.no-neck-pain")
 require("plugins.blink")
 
 require("config.lsp")
+
+require("plugins.which-key")
 
 load_theme()
 

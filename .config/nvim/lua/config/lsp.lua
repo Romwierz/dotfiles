@@ -52,9 +52,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('[d', vim.diagnostic.goto_prev, 'Goto prev diagnostic')
         map('[D', vim.diagnostic.goto_prev, 'Goto prev diagnostic')
         map(']D', vim.diagnostic.goto_prev, 'Goto prev diagnostic')
-        map('<leader>e', vim.diagnostic.open_float, '[E]xpand diagnostic')
-        --map('<leader>q', vim.diagnostic.setloclist, 'setloclist()')
-        map('<leader>q', vim.diagnostic.setqflist, 'setqflist()')
+        map('<leader>de', vim.diagnostic.open_float, '[E]xpand diagnostic')
+        map('<leader>dl', vim.diagnostic.setloclist, '[L]ocation list')
+        map('<leader>q', vim.diagnostic.setqflist, '[Q]uickfix list')
+        map('<leader>dd', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, 'Toggle diagnostics')
 
         -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
         ---@param client vim.lsp.Client

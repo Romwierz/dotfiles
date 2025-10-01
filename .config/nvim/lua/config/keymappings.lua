@@ -10,15 +10,17 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<leader>yf", function()
 	local file = vim.fn.expand("%:t")
 	vim.fn.setreg("+", file)
-	print("copied filename:", file)
-end)
+	print("Copied filename:", file)
+end,
+{ desc = "Copy filename" })
 
 -- Copy filepath
 vim.keymap.set("n", "<leader>yF", function()
 	local path = vim.fn.expand("%:p")
 	vim.fn.setreg("+", path)
-	print("copied filepath:", path)
-end)
+	print("Copied filepath:", path)
+end,
+{ desc = "Copy absolute filepath" })
 
 -- Open file under cursor (modified to use absolute path)
 local function open_cfile()
@@ -68,7 +70,6 @@ vim.keymap.set("i", "<C-P>", paste_image, { desc = "Paste image from clipboard i
 
 -- Additional yanking and deleting
 vim.keymap.set("n", "Y", "y$", { desc = "Yank until EOL" })
-vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
 
 -- Center screen when jumping
 --vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
@@ -142,10 +143,11 @@ vim.keymap.set("n", "<leader>G", ":lua require('fzf-lua').grep_cword()<CR>") --g
 
 -- Misc
 vim.keymap.set("n", "<leader>rc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
-vim.keymap.set("n", "<leader>w", ":w<CR>") --save file but q u i c k e r
-vim.keymap.set("n", "<leader>W", ":wa<CR>") --save all files (buffers)
-vim.keymap.set("n", "ZA", ":confirm wqall<CR>") --save all buffers and exit
-vim.keymap.set("n", "J", "mzJ`z") --keep cursor position when joining lines
-vim.keymap.set("n", "<leader>z", ":lua require('no-neck-pain').toggle()<CR>") --toggle zenmode
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) --replace word under cursor, <C-c> to cancel
+vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save" }) --save file but q u i c k e r
+vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Save all" }) --save all files (buffers)
+vim.keymap.set("n", "ZZ", "ZZ", { desc = "Save and close" })
+vim.keymap.set("n", "ZA", ":confirm wqall<CR>", { desc = "Save all and exit" }) --save all buffers and exit
+vim.keymap.set("n", "J", function() return "mz" .. vim.v.count1 .. "J`z" end, { expr = true, desc = "Join line below" }) --keep cursor position when joining lines
+vim.keymap.set("n", "<leader>z", ":lua require('no-neck-pain').toggle()<CR>", { desc = "Toggle centering" }) --toggle zenmode
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor (<C-c> to cancel)"}) --replace word under cursor, <C-c> to cancel
 
