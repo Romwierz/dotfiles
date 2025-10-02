@@ -150,4 +150,5 @@ vim.keymap.set("n", "ZA", ":confirm wqall<CR>", { desc = "Save all and exit" }) 
 vim.keymap.set("n", "J", function() return "mz" .. vim.v.count1 .. "J`z" end, { expr = true, desc = "Join line below" }) --keep cursor position when joining lines
 vim.keymap.set("n", "<leader>z", ":lua require('no-neck-pain').toggle()<CR>", { desc = "Toggle centering" }) --toggle zenmode
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor (<C-c> to cancel)"}) --replace word under cursor, <C-c> to cancel
+vim.keymap.set({ "n", "v" }, "<leader>!", ":'<,'>w !sh<CR>", { desc = "Execute current line(s) as shell command" })
 
