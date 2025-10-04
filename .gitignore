@@ -1,8 +1,5 @@
 .config/obsidian-settings/themes/
 
-# ignore main i3 config file because what it links to depends on the device
-.config/i3/config
-
 .config/git/gitconfig.local
 
 saved_theme

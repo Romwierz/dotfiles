@@ -41,7 +41,7 @@ icons[shutdown]=""
 icons[cancel]=""
 
 declare -A actions
-actions[lockscreen]="loginctl lock-session ${XDG_SESSION_ID-}"
+actions[lockscreen]="power-action lockscreen"
 #actions[switchuser]="???"
 actions[logout]="power-action logout"
 actions[suspend]="power-action suspend"
