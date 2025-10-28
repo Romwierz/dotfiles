@@ -30,6 +30,7 @@ Plug('folke/zen-mode.nvim') --zen-mode
 --Plug ('shortcuts/no-neck-pain.nvim', { [ 'tag' ] = '*' })
 Plug ('shortcuts/no-neck-pain.nvim')
 Plug('MeanderingProgrammer/render-markdown.nvim') --render md inline
+Plug "rafamadriz/friendly-snippets"
 
 -- LSP stuff
 Plug 'mason-org/mason.nvim'
@@ -44,6 +45,7 @@ require("config.theme")
 require("config.keymappings")
 require("config.options")
 require("config.autocmd")
+require("config.utils")
 
 require("plugins.colorizer")
 require("plugins.colorscheme")
@@ -64,4 +66,9 @@ load_theme()
 if vim.env.NVIM_MODE == "notes" then
     require("plugins.render-markdown")
     vim.cmd("Gitsigns toggle_signs")
+    if get_hostname() == "madnessaltar" then
+        vim.opt.bg = 'light'
+        vim.cmd("colorscheme gruvbox")
+        require("lualine").setup({ options = { theme = "gruvbox" } })
+    end
 end

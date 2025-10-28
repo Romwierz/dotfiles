@@ -24,6 +24,7 @@ require("catppuccin").setup({
                 PreProc = { fg = frappe.mauve },
                 ["@function.macro"] = { fg = frappe.text },
                 ["@keyword.import.c"] = { fg = frappe.mauve },
+                ["@keyword.import.cpp"] = { fg = frappe.mauve },
                 Label = { fg = frappe.peach, style = { "bold" } },
                 ["@markup.strong"] = { fg = frappe.mauve, style = { "bold" } },
                 ["@markup.raw"] = { fg = frappe.overlay1, style = { "italic" } },
@@ -43,6 +44,7 @@ require("catppuccin").setup({
                 PreProc = { fg = latte.mauve },
                 ["@function.macro"] = { fg = latte.text },
                 ["@keyword.import.c"] = { fg = latte.mauve },
+                ["@keyword.import.cpp"] = { fg = latte.mauve },
                 Label = { fg = latte.peach, style = { "bold" } },
             }
         end
