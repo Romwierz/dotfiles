@@ -10,7 +10,7 @@
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "clangd" },
+    ensure_installed = { "lua_ls", "clangd", "basedpyright" },
 })
 
 --vim.lsp.config( "lua_ls", {
