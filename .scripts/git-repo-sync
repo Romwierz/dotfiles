@@ -67,6 +67,9 @@ pull() {
 }
 
 push-notes() {
+    # pull before pushing
+    pull "$NOTES_DIR"
+
     get_modified_dirs_full_paths
 
     echo "Modified folders:"
