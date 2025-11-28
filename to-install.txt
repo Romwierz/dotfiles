@@ -1,27 +1,36 @@
+# available through apt (in default repos)
 stow
 lf
-fzf (+ shell integration script[s])
-wikiman
+fzf
 btop
 bat
 ssh
 git
 rofi
-brave
-vscode
 xsel
 moreutils
-obsidian
-notify-send
-i3-blocks
-local-send
+libnotify-bin (includes notify-send)
 qpdfview
-ueberzugpp
+tldr
+ripgrep w3m (wikiman dependencies)
 
 manpages-dev
 manpages-posix
 manpages-posix-dev
 
+# manual install / non-standard repos
+brave
+nvim
+obsidian
+wikiman + tldr source
+local-send
+ueberzugpp
+i3-blocks
+ctpv
 fonts
 
 libs used by programs
+
+# requires additional configuration
+bat (alias batcat as bat)
+fzf (shell integration scripts)
