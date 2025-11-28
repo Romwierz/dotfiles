@@ -18,8 +18,9 @@
     fi
 
     # ARM GCC Toolchain
-    if [ -d "/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin" ] ; then
-        PATH="$PATH:/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+    match=$(echo /opt/arm-gnu-toolchain-*-x86_64-arm-none-eabi/bin)
+    if [ -d "$match" ] ; then
+        PATH="$PATH:$match"
     fi
 
     # Scripts
