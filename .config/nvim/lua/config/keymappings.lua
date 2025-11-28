@@ -133,6 +133,7 @@ vim.keymap.set("n", "<leader>fh", ":lua require('fzf-lua').files({ cwd = '~/' })
 vim.keymap.set("n", "<leader>f.", ":lua require('fzf-lua').files({ cwd = '~/dotfiles' })<CR>") --search dotfiles
 vim.keymap.set("n", "<leader>fc", ":lua require('fzf-lua').files({ cwd = '~/.config' })<CR>") --search .config
 vim.keymap.set("n", "<leader>fl", ":lua require('fzf-lua').files({ cwd = '~/.local' })<CR>") --search .local
+vim.keymap.set("n", "<leader>fp", ":lua require('fzf-lua').files({ cwd = '~/Projects' })<CR>") --search projects
 --vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files({ cwd = '..' })<CR>") --search above
 vim.keymap.set("n", "<leader>fr", ":lua require('fzf-lua').resume()<CR>") --last search
 vim.keymap.set("n", "<leader>fb", ":lua require('fzf-lua').buffers()<CR>") --search buffers
