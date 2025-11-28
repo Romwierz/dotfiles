@@ -11,6 +11,8 @@
 Description=Git Repos Auto-Sync
 ; Wants=dunst.service
 ; After=dunst.service
+Requires=default.target
+After=default.target
 
 [Service]
 Type=oneshot
