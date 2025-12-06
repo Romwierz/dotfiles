@@ -31,6 +31,7 @@ Plug('folke/zen-mode.nvim') --zen-mode
 Plug ('shortcuts/no-neck-pain.nvim')
 Plug('MeanderingProgrammer/render-markdown.nvim') --render md inline
 Plug "rafamadriz/friendly-snippets"
+Plug 'christoomey/vim-tmux-navigator'
 
 -- LSP stuff
 Plug 'mason-org/mason.nvim'
