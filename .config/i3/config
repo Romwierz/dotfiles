@@ -1,6 +1,9 @@
 # Based on https://github.com/SkyyySi/dots-nordic/blob/master/Configurations/i3/config
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+### Includes
+    include $HOME/.config/i3/`hostname`.conf
+
 ### Variables for settings (including colors) ###
 	set $mod                             Mod4
 	set $smod                            Shift
@@ -243,9 +246,6 @@
 	# With smart_gaps no gaps will be shown when there is
 	# precisely one window or split container on the workspace
 	smart_gaps off
-
-	workspace $ws3 gaps outer 35
-	workspace $ws3 gaps inner 5
 
 ### Borders ###
 	default_border pixel $wm_setting_border_size
