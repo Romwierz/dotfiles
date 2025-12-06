@@ -3,3 +3,6 @@
 .config/git/gitconfig.local
 
 saved_theme
+
+# Tmux plugins (they can be installed within tmux)
+.config/tmux/plugins/*
