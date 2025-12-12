@@ -53,8 +53,8 @@
         gb="cd -"
 
 ### Git
-    alias git?="clear -x; git status; git log --oneline -5" \
-        gits="git status --short" \
+    alias git\?="clear -x; git status; git log --oneline -5" \
+        gits="git status" \
         gitd="git diff --output-indicator-new='+' --output-indicator-old='-'" \
         gitds="git diff --staged --output-indicator-new='+' --output-indicator-old='-'" \
         gitap="git add --patch" \
