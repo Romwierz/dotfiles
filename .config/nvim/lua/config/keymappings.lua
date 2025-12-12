@@ -57,7 +57,7 @@ local function paste_image()
     os.execute(cmd)
 
     local relpath = "images/" .. filename
-    local link = "![](" .. relpath .. ")"
+    local link = "![](" .. relpath .. ")  "
 
     if vim.fn.mode():sub(1,1) == "i" then
         vim.api.nvim_feedkeys(link, "n", true) --insert mode
