@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# trap 'echo "GOT TERM" >> /tmp/lock.log; exit 0' TERM
+# trap 'echo "GOT INT"  >> /tmp/lock.log; exit 0' INT
+# echo "started $$" >> /tmp/lock.log
+# while :; do sleep 1; done
+
+#if /tmp/lock == 1
+if [[ -e /tmp/lock ]]; then read lock < /tmp/lock; fi
+
+if [[ "$lock" == 1 ]]; then
+    echo 0 > /tmp/lock
+    i3lock --nofork --color 2E3440
+else 
+    xset dpms force off
+fi
