@@ -18,21 +18,18 @@ if [ "$stash_result" = "No local changes to save" ]; then
     needs_pop=0
 fi
 
-echo -e "${BLUE}Pulling updates from dotfiles repo...${NC}"
-echo
+echo -e "${BLUE}Pulling updates from dotfiles repo...${NC}\n"
 git pull origin main
 echo
 
 if [[ $needs_pop -eq 1 ]]; then
-    echo -e "${BLUE}Popping stashed changes...${NC}"
-    echo
+    echo -e "${BLUE}Popping stashed changes...${NC}\n"
     git stash pop
 fi
 
 unmerged_files=$(git diff --name-only --diff-filter=U)
 if [[ ! -z $unmerged_files ]]; then
-   echo -e "${RED}The following files have merge conflicts after popping the stash:${NC}"
-   echo
+   echo -e "${RED}The following files have merge conflicts after popping the stash:${NC}\n"
    printf %"s\n" $unmerged_files  # Ensure newlines are printed
 else
    # Run stow to ensure all new dotfiles are linked

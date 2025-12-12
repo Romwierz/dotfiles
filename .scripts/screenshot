@@ -3,19 +3,26 @@
 ### Full credit for this script to https://github.com/TheGassyNinja
 
 export DISPLAY=:0
-current=$(date +%H-%M-%S-%d-%m-%Y).png
+current=$(date +%Y-%m-%d_%H:%M:%S).png
 
 SCREENSHOTS_DIR="${HOME}/Media/Pictures/Screenshots"
 
-if [[ ! -d  "${SCREENSHOTS_DIR}" ]] then;
+if [[ ! -d  "${SCREENSHOTS_DIR}" ]]; then
 	mkdir -p "${SCREENSHOTS_DIR}"
 fi
 
-if [[ -z "${1}" ]]; then
-		import -window root "${SCREENSHOTS_DIR}/${current}" || exit 0 # If no argument, full screen (all monitors)
+if [[ "${1}" == "--selection" ]]; then
+    maim --select | tee /tmp/clipboard.png > "${SCREENSHOTS_DIR}/${current}"; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png \
+        && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'
+elif [[ "${1}" == "--color" ]]; then
+    maim -st 0 | tee "$HOME/.last_color.png" \
+        | convert - -colorspace sRGB -resize 1x1\! -format '#%[hex:p{0,0}]' info:- \
+        | xclip -selection clipboard \
+        && notify-send -i /tmp/clipboard.png -t 1500 'Color copied to clipboard!'
 else
-		import "${SCREENSHOTS_DIR}/${current}" || exit 0 # Custom selection, or click a window
+    maim | tee /tmp/clipboard.png > "${SCREENSHOTS_DIR}/${current}"; \
+		xclip -selection clipboard -t image/png /tmp/clipboard.png \
+        && notify-send -i /tmp/clipboard.png -t 1500 'Screenshot copied to clipboard!'
 fi
 
-
-notify-send "Screenshot ${current} taken successfully!"
