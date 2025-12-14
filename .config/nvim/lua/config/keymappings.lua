@@ -128,19 +128,20 @@ vim.keymap.set({ "i", "c" }, "<Left>", function()
     return vim.fn.pumvisible() == 1 and "<C-e>" or"<Left>" end, { expr = true })
 
 -- Fzf and grep
-vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files()<CR>") --search cwd
-vim.keymap.set("n", "<leader>fh", ":lua require('fzf-lua').files({ cwd = '~/' })<CR>") --search home
-vim.keymap.set("n", "<leader>f.", ":lua require('fzf-lua').files({ cwd = '~/dotfiles' })<CR>") --search dotfiles
-vim.keymap.set("n", "<leader>fc", ":lua require('fzf-lua').files({ cwd = '~/.config' })<CR>") --search .config
-vim.keymap.set("n", "<leader>fl", ":lua require('fzf-lua').files({ cwd = '~/.local' })<CR>") --search .local
-vim.keymap.set("n", "<leader>fp", ":lua require('fzf-lua').files({ cwd = '~/Projects' })<CR>") --search projects
---vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files({ cwd = '..' })<CR>") --search above
-vim.keymap.set("n", "<leader>fr", ":lua require('fzf-lua').resume()<CR>") --last search
-vim.keymap.set("n", "<leader>fb", ":lua require('fzf-lua').buffers()<CR>") --search buffers
-vim.keymap.set("n", "<leader>F", ":FzfLua global<CR>") --search files, buffers and LSP symbols (VSCode like)
-vim.keymap.set("n", "<leader>fz", ":FzfLua<CR>") --just FzfLua
-vim.keymap.set("n", "<leader>g", ":lua require('fzf-lua').grep()<CR>") --grep
-vim.keymap.set("n", "<leader>G", ":lua require('fzf-lua').grep_cword()<CR>") --grep word under cursor
+vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files()<CR>", { desc = "Search in cwd" })
+vim.keymap.set("n", "<leader>fF", ":lua require('fzf-lua').files({ no_ignore = true })<CR>", { desc = "Search ALL in cwd" })
+vim.keymap.set("n", "<leader>fh", ":lua require('fzf-lua').files({ cwd = '~/' })<CR>", { desc = "Search sweet $HOME" })
+vim.keymap.set("n", "<leader>f.", ":lua require('fzf-lua').files({ cwd = '~/dotfiles' })<CR>", { desc = "Search dotfiles" })
+vim.keymap.set("n", "<leader>fc", ":lua require('fzf-lua').files({ cwd = '~/.config' })<CR>", { desc = "Search .config" })
+vim.keymap.set("n", "<leader>fl", ":lua require('fzf-lua').files({ cwd = '~/.local' })<CR>", { desc = "Search .local" })
+vim.keymap.set("n", "<leader>fp", ":lua require('fzf-lua').files({ cwd = '~/Projects' })<CR>", { desc = "Search projects" })
+--vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files({ cwd = '..' })<CR>", { desc = "" })
+vim.keymap.set("n", "<leader>fr", ":lua require('fzf-lua').resume()<CR>", { desc = "Search resume" })
+vim.keymap.set("n", "<leader>fb", ":lua require('fzf-lua').buffers()<CR>", { desc = "Search buffers" })
+vim.keymap.set("n", "<leader>F", ":FzfLua global<CR>", { desc = "Search files, buffers, LSP symbols" })
+vim.keymap.set("n", "<leader>fz", ":FzfLua<CR>", { desc = "FzfLua" })
+vim.keymap.set("n", "<leader>g", ":lua require('fzf-lua').grep()<CR>", { desc = "Search strings/regexes" })
+vim.keymap.set("n", "<leader>G", ":lua require('fzf-lua').grep_cword()<CR>", { desc = "Grep word/WORD under cursor" })
 
 -- Misc
 vim.keymap.set("n", "<leader>rc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
