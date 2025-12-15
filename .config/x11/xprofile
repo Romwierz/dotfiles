@@ -13,6 +13,7 @@ case "$(hostname)" in
 	(thinkpad)
 		xrandr --dpi 158
 		xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources-laptop & xrdbpid=$!
+        echo 1 > /tmp/lock
 		;;
 	(*)
 		;;

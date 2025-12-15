@@ -9,7 +9,6 @@
 if [[ -e /tmp/lock ]]; then read lock < /tmp/lock; fi
 
 if [[ "$lock" == 1 ]]; then
-    echo 0 > /tmp/lock
     i3lock --nofork --color 2E3440
 else 
     xset dpms force off
