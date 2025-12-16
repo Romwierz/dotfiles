@@ -145,12 +145,6 @@ fi
     bind '"\C-o":"lfcd\C-m"'
     alias lf='lfcd'
 
-    # display icons in lf file manager
-    LF_ICONS_FILE="$HOME/.config/lf/icons"
-    if [ -f "$LF_ICONS_FILE" ]; then
-        source "$LF_ICONS_FILE"
-    fi
-
 ### fzf
     source /usr/share/doc/fzf/examples/key-bindings.bash
     source /usr/share/doc/fzf/examples/completion.bash
