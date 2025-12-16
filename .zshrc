@@ -75,3 +75,7 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 # wikiman
 source /usr/share/wikiman/widgets/widget.zsh
+# If on graphical session (X11) export $WINDOWID to be used by ctpv/ueberzugpp
+if command -v xdotool >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
+    export WINDOWID=${WINDOWID:-$(xdotool getactivewindow 2>/dev/null)}
+fi

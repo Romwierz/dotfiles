@@ -13,6 +13,7 @@ libnotify-bin (includes notify-send)
 qpdfview
 tldr
 ripgrep w3m (wikiman dependencies)
+xdotool
 
 manpages-dev
 manpages-posix
