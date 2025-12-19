@@ -6,3 +6,5 @@ saved_theme
 
 # Tmux plugins (they can be installed within tmux)
 .config/tmux/plugins/*
+
+.config/secrets/
