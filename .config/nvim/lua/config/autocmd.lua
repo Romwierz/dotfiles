@@ -39,6 +39,14 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup,
+    pattern = "typst",
+    callback = function()
+        vim.opt_local.textwidth = 110
+    end,
+})
+
 -- Auto-close terminal when process exits
 vim.api.nvim_create_autocmd("TermClose", {
     group = augroup,
