@@ -1,3 +1,5 @@
+local utils = require("config.utils")
+
 -- Set leader
 vim.keymap.set("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
@@ -38,14 +40,10 @@ local function open_cfile()
 end
 vim.keymap.set("n", "gx", open_cfile, { silent = true })
 
--- Paste reference to image from clipboard (for X11)
+---------------------------------------------------------------------
+-- Paste markdown reference to image/website from clipboard (for X11)
+---------------------------------------------------------------------
 local function paste_image()
-    local mime = vim.fn.system("xclip -selection clipboard -t TARGETS -o")
-    if not mime:match("image/png") then
-        print("Image in clipboard not found")
-        return
-    end
-
     local file_dir = vim.fn.expand("%:p:h")
     local image_dir = file_dir .. "/images"
     vim.fn.mkdir(image_dir, "p")
@@ -59,14 +57,32 @@ local function paste_image()
     local relpath = "images/" .. filename
     local link = "![](" .. relpath .. ")  "
 
-    if vim.fn.mode():sub(1,1) == "i" then
-        vim.api.nvim_feedkeys(link, "n", true) --insert mode
-    else
-        vim.api.nvim_put({ link }, "c", true, true) --normal mode
-    end
+    utils.put_text(link)
 end
-vim.keymap.set("n", "<leader>p", paste_image, { desc = "Paste image from clipboard into Markdown" })
-vim.keymap.set("i", "<C-P>", paste_image, { desc = "Paste image from clipboard into Markdown" })
+local function paste_website(url)
+    local link = "[" .. url .. "]()  "
+
+    utils.put_text(link)
+end
+local function paste_md_ref()
+    -- for images system clipboard utility must be used, but for other things register synchronized with
+    -- the sytem clipboard (+) allows more flexibility
+    local mime = vim.fn.system("xclip -selection clipboard -t TARGETS -o")
+    local output = vim.fn.getreg("+")
+
+    if mime:match("image/png") then
+        return paste_image()
+    end
+
+    if output:match("^https?://") then
+        return paste_website(output)
+    end
+
+    print("Image/website in clipboard not found")
+end
+vim.keymap.set("n", "<leader>p", paste_md_ref, { desc = "Paste image/website from clipboard into Markdown" })
+vim.keymap.set("i", "<C-P>", paste_md_ref, { desc = "Paste image/website from clipboard into Markdown" })
+---------------------------------------------------------------------
 
 -- Additional yanking and deleting
 vim.keymap.set("n", "Y", "y$", { desc = "Yank until EOL" })
