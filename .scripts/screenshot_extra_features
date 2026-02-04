@@ -23,7 +23,7 @@ colorpicker () { # click a pixel OR draw a selection for average color, returned
 
     HEX=$(magick "$TMP" -scale 1x1\! -format "#%[hex:p{0,0}]" info:) # SRGB: '%[pixel:p{0,0}]'
 
-    notify-send -i "$TMP" $HEX # set the tmp img as the notif icon
+    notify-send -i "$TMP" "$HEX" # set the tmp img as the notif icon
     echo "$HEX" | xclip -i -selection clipboard # copy to clip
     rm "$TMP"
 }

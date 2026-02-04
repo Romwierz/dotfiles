@@ -18,10 +18,10 @@ fi
 
 case "$1" in
     (lockscreen)
-        loginctl lock-session ${XDG_SESSION_ID-} && echo 1 > /tmp/lock && xset dpms force off
+        loginctl lock-session "${XDG_SESSION_ID-}" && echo 1 > /tmp/lock && xset dpms force off
         ;;
     (logout)
-        loginctl terminate-session ${XDG_SESSION_ID-}
+        loginctl terminate-session "${XDG_SESSION_ID-}"
         ;;
     (suspend)
         systemctl suspend

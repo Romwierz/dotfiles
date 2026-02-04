@@ -253,4 +253,4 @@ for dest_obsidian in "${ALL_DST_OBSIDIAN_DIRS[@]}"; do
 
 done
 
-echo "You can now reload Obsidian window.
+echo "You can now reload Obsidian window."
