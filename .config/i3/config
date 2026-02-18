@@ -9,6 +9,7 @@
 	set $smod                            Shift
 	set $wm_setting_font                 pango:monospace, FontAwesome 9
 	set $wm_setting_border_size          0
+	set $wm_setting_floating_border_size 2
 	set $wm_setting_key_left1            Left
 	set $wm_setting_key_left2            h
 	set $wm_setting_key_down1            Down
@@ -250,7 +251,8 @@
 
 ### Borders ###
 	default_border pixel $wm_setting_border_size
-	default_floating_border pixel $wm_setting_border_size
+	default_floating_border pixel $wm_setting_floating_border_size
+    for_window [floating] border pixel $wm_setting_floating_border_size
 	# smart_borders on
 
 	for_window [class="Gnome-terminal"] border pixel 2
