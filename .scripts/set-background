@@ -69,6 +69,7 @@ set_login_background() {
     sudo chown root:root "${WALLPAPERS_DIR}/${IMG_BASENAME}"
     sudo chmod 644 "${WALLPAPERS_DIR}/${IMG_BASENAME}"
     sudo sed -i "s|^background=.*|background=${WALLPAPERS_DIR}/${IMG_BASENAME}|" /etc/lightdm/slick-greeter.conf
+    sudo sed -i '/^BackgroundFile=.\+$/d' /var/lib/AccountsService/users/$(whoami)
 }
 
 parse_args "$@"
