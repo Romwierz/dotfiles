@@ -36,6 +36,12 @@
 
     alias less="less -i"
 
+    # Print signals and corresponding values easily (not all shells show signals' corresponding values)
+    alias signals-show="bash -c 'kill -l'"
+
+    # Use echo to print to stderr
+    echoerr() { echo "$@" 1>2; }
+
     # Don't print default startup message on running GNU R
     alias R="R --quiet"
 
