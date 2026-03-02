@@ -62,6 +62,7 @@
     export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME/platformio"
     export W3M_DIR="$XDG_DATA_HOME/w3m"
     export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+    export R_ENVIRON_USER="$XDG_CONFIG_HOME/r/renviron"
 
 ### Secrets
     SECRETS_ENV="$XDG_CONFIG_HOME/secrets/env"

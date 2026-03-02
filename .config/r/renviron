@@ -1,0 +1,2 @@
+R_PROFILE_USER = ${XDG_CONFIG_HOME}/r/rprofile
+R_HISTFILE = ${XDG_STATE_HOME}/r_history

@@ -36,6 +36,9 @@
 
     alias less="less -i"
 
+    # Don't print default startup message on running GNU R
+    alias R="R --quiet"
+
 ### Movement
     alias gc="cd ~/.config" \
         gD="cd ~/Documents" \
