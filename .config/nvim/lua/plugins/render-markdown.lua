@@ -85,7 +85,7 @@ require('render-markdown').setup({
         width = 0.5,
     },
     bullet = {
-        icons = { '', '○', '◆', '◇' },
+        icons = { '', '', '◆', '◇' },
         left_pad = 1,
     },
     checkbox = {
