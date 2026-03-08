@@ -64,6 +64,9 @@
     export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
     export R_ENVIRON_USER="$XDG_CONFIG_HOME/r/renviron"
 
+    # Config files' paths that must be set explicitly
+    export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/rgrc"
+
 ### Secrets
     SECRETS_ENV="$XDG_CONFIG_HOME/secrets/env"
     [ -f "$SECRETS_ENV" ] && . "$SECRETS_ENV"
