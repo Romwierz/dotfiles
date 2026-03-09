@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Set the directory to store zinit and plugins
@@ -10,8 +10,8 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # Source/Load zinit
@@ -25,6 +25,19 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit light jeffreytse/zsh-vi-mode
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+ZVM_CLIPBOARD_COPY_CMD='xclip -selection clipboard'
+ZVM_CLIPBOARD_PASTE_CMD='xclip -selection clipboard -o'
+ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+function zvm_after_init() {
+    # Shell integrations
+    # fzf
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+    # wikiman
+    source /usr/share/wikiman/widgets/widget.zsh
+}
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -70,11 +83,6 @@ if [ -f ~/.config/bash/bash_aliases ]; then
 fi
 
 # Shell integrations
-# fzf
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
-# wikiman
-source /usr/share/wikiman/widgets/widget.zsh
 # If on graphical session (X11) export $WINDOWID to be used by ctpv/ueberzugpp
 if command -v xdotool >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
     export WINDOWID=${WINDOWID:-$(xdotool getactivewindow 2>/dev/null)}
