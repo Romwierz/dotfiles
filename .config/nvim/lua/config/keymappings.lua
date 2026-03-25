@@ -144,7 +144,7 @@ vim.keymap.set({ "i", "c" }, "<Left>", function()
     return vim.fn.pumvisible() == 1 and "<C-e>" or"<Left>" end, { expr = true })
 
 -- Fzf and grep
-vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files()<CR>", { desc = "Search in cwd" })
+vim.keymap.set("n", "<leader>ff", ":lua require('fzf-lua').files({ hidden = false } )<CR>", { desc = "Search in cwd" })
 vim.keymap.set("n", "<leader>fF", ":lua require('fzf-lua').files({ no_ignore = true })<CR>", { desc = "Search ALL in cwd" })
 vim.keymap.set("n", "<leader>fh", ":lua require('fzf-lua').files({ cwd = '~/' })<CR>", { desc = "Search sweet $HOME" })
 vim.keymap.set("n", "<leader>f.", ":lua require('fzf-lua').files({ cwd = '~/dotfiles' })<CR>", { desc = "Search dotfiles" })
