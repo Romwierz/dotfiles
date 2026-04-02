@@ -51,11 +51,22 @@ zinit cdreplay -q
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Widgets
+# Clear screen but keep current command buffer
+function clear-screen-and-scrollback() {
+    echoti civis >"$TTY"
+    printf '%b' '\e[H\e[2J\e[3J' >"$TTY"
+    echoti cnorm >"$TTY"
+    zle redisplay
+}
+zle -N clear-screen-and-scrollback
+
 # Keybindings
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
+bindkey -v
+bindkey ' ' magic-space
+bindkey '^Xl' clear-screen-and-scrollback
+# Hotkey insertions
+bindkey -s '^Xgc' 'git commit -m ""\C-b'
 
 # History
 HISTSIZE=5000
