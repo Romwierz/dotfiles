@@ -38,6 +38,10 @@ function zvm_after_init() {
     # wikiman
     source /usr/share/wikiman/widgets/widget.zsh
 }
+function zvm_after_lazy_keybindings() {
+    zvm_bindkey vicmd 'U' redo
+    ZVM_VI_HIGHLIGHT_BACKGROUND=#3b4394
+}
 
 # Load completions
 autoload -Uz compinit && compinit
