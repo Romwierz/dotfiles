@@ -1,3 +1,17 @@
+conf_dir=~/.custom-config
+
 if [ -n "$DISPLAY" ] && command -v xset >/dev/null; then
     xset r rate 300 50
+fi
+
+if [ -f "$conf_dir"/shell-aliases ]; then
+    . "$conf_dir"/shell-aliases
+fi
+
+if [ -f ${conf_dir}/vimrc ]; then
+    alias vim="vim -S ${conf_dir}/vimrc"
+fi
+
+if [ -f ${conf_dir}/tmux.conf ]; then
+    alias tmux="tmux -f ${conf_dir}/tmux.conf"
 fi

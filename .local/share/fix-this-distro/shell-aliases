@@ -1,3 +1,6 @@
+# Todo:
+# - check if bat is available in the system and if yes, use it as pager
+
 # Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -10,10 +13,20 @@ else
     alias ls="ls -hN --group-directories-first"
 fi
 
-# Some more ls aliases
+# Aliases
 alias ll='ls -alF' \
     la='ls -A' \
-    l='ls -CF'
+    l='ls -CF' \
+    cp="cp -iv"
 
-# More
-cp="cp -iv"
+# Functions
+hlp() {
+    "$@" --help 2>&1 | less -r
+}
+alias h=hlp \
+    help=hlp
+
+cheat() {
+    curl cheat.sh/${1} | less -r
+}
+alias cht=cheat
