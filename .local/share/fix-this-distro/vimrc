@@ -1,0 +1,33 @@
+" ========== Options ==========
+set nocompatible
+set number
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nowrap
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+" Copy to system clipboard
+set clipboard=unnamedplus
+
+" Colortheme
+" color slate
+
+" ========== Keymappings ==========
+" Set leader
+nnoremap <Space> <Nop>
+vnoremap <Space> <Nop>
+let mapleader = " "
+let maplocalleader = " "
+
+" Clear search highlights after ESC
+nnoremap <Esc> :nohlsearch<CR>
+" Quicksave
+nnoremap <leader>w :w<CR>
+
+" ========== Autocommands ==========
