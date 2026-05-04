@@ -1,6 +1,18 @@
 [Desktop Entry]
+Name=Sioyek
+GenericName=PDF Viewer
+Comment=PDF viewer for reading research papers and technical books
+Keywords=pdf;viewer;reader;research;
+TryExec=/home/michal/Applications/Sioyek-x86_64.AppImage
+Exec=/home/michal/Applications/Sioyek-x86_64.AppImage %f
+StartupNotify=true
+Terminal=false
 Type=Application
-Name=PDF Reader
-Exec=gtk-launch qpdfview %F
-Icon=qpdfview
+Icon=sioyek-icon-linux
 Categories=Office;Viewer;
+MimeType=application/pdf;
+
+# In rofi it won't work without additional configuration
+[Desktop Action NewWindow]
+Name=Open New Window
+Exec=/home/michal/Applications/Sioyek-x86_64.AppImage --new-window %f
