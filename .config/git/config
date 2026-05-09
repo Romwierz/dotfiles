@@ -18,6 +18,7 @@
     context = 3
     renames = copies
     interHunkCopies = 10
+    submodule = log
 
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
@@ -42,6 +43,7 @@
     branch = true # shows current branch name in 'git status' output
     showStash = true
     showUntrackedFiles = all # show untracked files without grouping them into directories
+    submodulesummary = true
 
 [push]
     autoSetupRemote = true  # easier to push new branches
