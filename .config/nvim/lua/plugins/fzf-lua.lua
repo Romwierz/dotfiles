@@ -64,5 +64,8 @@ actions = {
         true,
         ["alt-y"] = FzfLua.actions.toggle_hidden,
     }
+},
+files = {
+    fd_opts = [[--color=never --type f --type l --exclude .git --exclude .jj --exclude images]],
 }
 }

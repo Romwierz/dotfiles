@@ -29,6 +29,7 @@ require("catppuccin").setup({
                 ["@markup.strong"] = { fg = frappe.mauve, style = { "bold" } },
                 ["@markup.raw"] = { fg = frappe.overlay1, style = { "italic" } },
                 ["@markup.list"] = { fg = frappe.text },
+                Macro = { fg = frappe.text },
             }
         end,
         latte = function(latte)
