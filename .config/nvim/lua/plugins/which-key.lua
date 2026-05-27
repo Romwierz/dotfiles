@@ -40,7 +40,10 @@ require("which-key").add({
     { "<leader>y\"", desc = "Copy register's content", expand = function()
         return expand_regs()
     end
-},
+    },
+    { "<leader>d", desc = "Debug" },
+    { "<leader>x", desc = "Diagnostics" },
+    { "<leader>h", desc = "Git" },
 })
 
 vim.keymap.set("n", "<leader>?", function()

@@ -40,6 +40,11 @@ Plug 'mason-org/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'saghen/blink.cmp'
 
+-- DAP
+Plug 'mfussenegger/nvim-dap'
+Plug 'igorlfs/nvim-dap-view'
+Plug 'https://codeberg.org/Jorenar/nvim-dap-disasm.git'
+
 vim.call('plug#end')
 
 -- Load configs from different files
@@ -60,6 +65,7 @@ require("plugins.no-neck-pain")
 require("plugins.blink")
 
 require("config.lsp")
+require("config.dap")
 
 require("plugins.which-key")
 
