@@ -1,0 +1,22 @@
+# Set home directory as auto-load safe-path
+set auto-load safe-path .
+
+# Hex dump
+define xxd
+  dump binary memory /tmp/dump.bin $arg0 ((char *)$arg0)+$arg1
+  shell xxd /tmp/dump.bin
+end
+document xxd
+  Runs xxd on a memory ADDR and LENGTH
+
+  xxd ADDR LENGTH
+end
+
+# GDB Dashboard
+source ~/.config/gdb/dashboard
+# themes: nord-darker one-dark paraiso-dark stata-dark zenburn bw
+dashboard -style syntax_highlighting ''
+dashboard -style style_selected_1 '0;33'
+dashboard assembly -style height 10
+dashboard source -style height 20
+dashboard notes

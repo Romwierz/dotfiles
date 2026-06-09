@@ -81,3 +81,5 @@
     alias sctl="systemctl"
     alias sctlu="systemctl --user"
 
+### GDB
+alias gdbt=gdb-tmux

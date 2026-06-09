@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+gdb_additional_pane="$(tmux split-pane -hPF "#D" "tail -f /dev/null")"
+if [ "$1" = --serial ]; then
+    shift
+    serial_pane="$(tmux split-pane -vPF "#D" "tio $1")"
+    shift
+fi
+# tmux last-pane
+tmux select-pane -L
+tty="$(tmux display-message -p -t "$gdb_additional_pane" '#{pane_tty}')"
+gdb -ex "dashboard source -output $tty" -ex "dashboard assembly -output $tty" "$@"
+tmux kill-pane -t "$gdb_additional_pane"
+[ -n "$serial_pane" ] && tmux kill-pane -t "$serial_pane"
