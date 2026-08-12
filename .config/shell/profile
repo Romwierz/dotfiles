@@ -8,6 +8,9 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# Variable that is checked in shells to make sure the ~/.profile was sourced
+export PROFILE_SOURCED=TRUE
+
 ### Set PATH
     if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"

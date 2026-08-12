@@ -1,5 +1,11 @@
 #!bin/bash
-# Shell agnosic stuff that should be run for every new shell instance - not only the login one like ~/.profile.
+# Shell agnostic stuff that should be run for every new shell instance and
+# not only the login shell like in ~/.profile file case.
+
+# Source ~/.profile if it hasn't been done yet
+if [ -z $PROFILE_SOURCED ]; then
+    . ${HOME}/.profile
+fi
 
 ### Misc
     # Enable color support of ls and also add handy aliases
