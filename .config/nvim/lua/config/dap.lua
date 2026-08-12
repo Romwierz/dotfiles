@@ -1,11 +1,36 @@
+-- Notes:
+--
+-- When using internalConsole/integratedTerminal as a program output, it may be required to alter
+-- stream buffering.
+--
+-- For example, in C/C++ DAP's REPL window is not treated as a regular terminal,
+-- so the output stream is not line buffered which is the default for terminals. Instead it's
+-- block buffered, so the data is not sent after newline. To get the data sent to stdout being
+-- diplayed, setbuf() can be used:
+-- ```
+--   #ifdef DEBUG
+--       setbuf(stdout, NULL);
+--   #endif
+-- ```
+-- It essentially turns off the buffering of the stdout stream. Other option is to sent the
+-- debug information to stderr which is always unbuffered on default:
+-- `fprintf(stderr, "Co to sie stanelo\n")`
+
 local dap = require("dap")
 local dap_view = require("dap-view")
+local dapui = require("dapui")
 
 -- DAP
 dap.adapters.gdb = {
   type = "executable",
   command = "gdb",
   args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+}
+
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = os.getenv('HOME') .. '/.vscode/extensions/ms-vscode.cpptools-1.29.3-linux-x64/debugAdapters/bin/OpenDebugAD7',
 }
 
 dap.configurations.c = {
@@ -16,12 +41,35 @@ dap.configurations.c = {
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
-    args = function() -- provide arguments if needed
+    args = function()
         -- Seems like returning a single string containing multiple args works
         return vim.fn.input('Arguments passed to the program: ')
     end,
     cwd = "${workspaceFolder}",
     stopAtBeginningOfMainSubprogram = true,
+    console = 'externalTerminal',
+  },
+  {
+    name = "Launch (cppdbg)",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    args = function ()
+        local str = vim.fn.input('Arguments passed to the program: ')
+        return vim.split(str, " ")
+    end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+    console = 'integratedTerminal',
+    setupCommands = {
+        {
+            text = '-enable-pretty-printing',
+            description =  'enable pretty printing',
+            ignoreFailures = false
+        },
+    },
   },
   {
     name = "Select and attach to process",
@@ -82,6 +130,52 @@ dap_view.setup({
     }
 })
 
+-- DAP UI
+dapui.setup({
+    layouts = { {
+        elements = { {
+            id = "scopes",
+            size = 0.25
+          }, {
+            id = "breakpoints",
+            size = 0.25
+          }, {
+            id = "stacks",
+            size = 0.25
+          }, {
+            id = "watches",
+            size = 0.25
+          } },
+        position = "left",
+        size = 40
+      }, {
+        elements = { {
+            id = "repl",
+            size = 1.0
+          },
+          -- {
+          --   id = "console",
+          --   size = 0.5
+          -- }
+      },
+        position = "bottom",
+        size = 20
+      } },
+})
+
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
+
 -- Keymappings
 local map = function(keys, func, desc, mode)
     mode = mode or 'n'
@@ -96,12 +190,24 @@ local function dap_view_toggle()
     end, 20)
 end
 
+local function dapui_toggle()
+    require("no-neck-pain").toggle()
+    -- Defer to make sure the layout is properyly rebuilt by NNP
+    vim.defer_fn(function()
+        dapui.toggle()
+    end, 20)
+end
+
 map('<leader>dc', dap.continue, 'Start/continue')
 map('<leader>dC', dap.run_last, 'Run last')
 map('<leader>db', dap.toggle_breakpoint, 'Toggle breakpoint')
+map('<leader>de', function() dap.set_exception_breakpoints({ 'all' }) end, 'Toggle breakpoint')
 map('<leader>dn', dap.step_over, 'Step over')
 map('<leader>ds', dap.step_into, 'Step into')
-map('<leader>dv', dap_view_toggle, 'Toggle DAP View')
+map('<leader>dS', dap.step_out, 'Step out')
+map('<leader>dv', dapui_toggle, 'Toggle DAP UI')
+map('<leader>dq', function() require("dap").terminate(); require("dapui").close() end, 'Terminate')
+map('<leader>dk', dapui.eval, 'Evaluate expr under cursor', { 'n', 'v' })
 
 -- Signs
 for _, group in pairs({

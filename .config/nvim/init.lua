@@ -42,6 +42,8 @@ Plug 'saghen/blink.cmp'
 
 -- DAP
 Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-neotest/nvim-nio'
+Plug 'rcarriga/nvim-dap-ui'
 Plug 'igorlfs/nvim-dap-view'
 Plug 'https://codeberg.org/Jorenar/nvim-dap-disasm.git'
 
