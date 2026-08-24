@@ -98,3 +98,26 @@
     insteadOf = "gh:"
 [color]
 	ui = auto
+
+# Aliases
+[alias]
+    s    = status
+    info = "!clear -x && git status && git log --oneline -5"
+    d    = diff --output-indicator-new='+' --output-indicator-old='-'
+    ds   = diff --staged --output-indicator-new='+' --output-indicator-old='-'
+    a    = add
+    ap   = add --patch
+    c    = commit -m
+    ca   = commit -a -m
+    cam  = commit --amend
+    ps   = push
+    pl   = pull
+    l    = log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'
+    lo   = log --pretty=format:"%C(magenta)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    last = log -1 HEAD
+    ; lo   = log --oneline
+    ; b    = branch
+    b    = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+    i    = init
+    cl   = clone
+    la   = "!git config -l | grep alias | cut -c 7-"

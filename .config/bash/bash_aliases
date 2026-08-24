@@ -68,22 +68,6 @@ fi
         gt="cd $XDG_DATA_HOME/Trash" \
         gb="cd -"
 
-### Git
-    alias git\?="clear -x; git status; git log --oneline -5" \
-        gits="git status" \
-        gitd="git diff --output-indicator-new='+' --output-indicator-old='-'" \
-        gitds="git diff --staged --output-indicator-new='+' --output-indicator-old='-'" \
-        gitap="git add --patch" \
-        gitc="git commit" \
-        gitps="git push" \
-        gitpl="git pull" \
-        gitl="git log --oneline" \
-        gitl="git log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'" \
-        gitb="git branch" \
-        giti="git init" \
-        gitcl="git clone"
-
-
 ### Systemd
     alias sctl="systemctl"
     alias sctlu="systemctl --user"
