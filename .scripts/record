@@ -8,6 +8,8 @@ record() {
 
     # ffmpeg -s 1920x1200 -f x11grab -r 30 -i :0.0+1920,0 -c:v h264 -qp 0 "$HOME/video_$(date '+%a__%b%d__%H_%M_%S').mkv" &
 
+    notify-send -t 1500 -h string:bgcolor:#a3be8c "Starting recording..."
+
     # Generic command to record at your screen dimensions
     ffmpeg -s "$(xdpyinfo | awk '/dimensions/{print $2}')" -f x11grab -r 30 -i :0.0 -c:v h264 -qp 0 \
         "$HOME/Media/Videos/video_$(date '+%a__%b%d__%H_%M_%S').mp4" &
@@ -18,9 +20,7 @@ record() {
     # ffmpeg -f alsa -i default -af "afftdn=nf=-75" "$HOME/audio_$(date '+%a__%b%d__%H_%M_%S').wav" &
     # echo $! > /tmp/audpid
 
-    echo "Rec •" > /tmp/recordingicon && pkill -RTMIN+3 dwmblocks
-
-    notify-send -t 500 -h string:bgcolor:#a3be8c "Recording started!"
+    echo "Rec •" > /tmp/recordingicon
 }
 
 end() {
@@ -28,9 +28,9 @@ end() {
 
     amixer set Capture toggle
 
-    echo "" > /tmp/recordingicon && pkill -RTMIN+3 dwmblocks
+    echo "" > /tmp/recordingicon
 
-    notify-send -t 500 -h string:bgcolor:#bf616a "Recording ended!"
+    notify-send -t 1500 -h string:bgcolor:#bf616a "Recording ended!"
 }
 
 # If the recording pid exists, end recording. If not, start recording
