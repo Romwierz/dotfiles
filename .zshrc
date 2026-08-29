@@ -60,6 +60,8 @@ function clear-screen-and-scrollback() {
     zle redisplay
 }
 zle -N clear-screen-and-scrollback
+# Load navi widget
+eval "$(navi widget zsh)"
 
 # Keybindings
 bindkey -v

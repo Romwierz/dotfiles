@@ -1,0 +1,4 @@
+% nmap
+
+# Scan network for open ssh ports
+nmap -p 22 192.168.100.0/24 | rg -B 4 'open.+ssh'

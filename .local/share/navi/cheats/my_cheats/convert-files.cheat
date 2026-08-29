@@ -1,0 +1,6 @@
+% convert files
+
+# Convert Markdown file to PDF
+pandoc <input> --css=github-markdown.css --pdf-engine=wkhtmltopdf -o <output>
+
+$ input: ls *.md

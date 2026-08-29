@@ -1,0 +1,15 @@
+% custom scripts
+
+# Increment index in filename
+increment-index.py <file>
+
+# Increment index in filename using 'git mv'
+increment-index.py -g <file>
+
+# Decrement index in filename
+increment-index.py -d <file>
+
+# Decrement index in filename using 'git mv'
+increment-index.py -d -g <file>
+
+$ file: ls [0-9]*
