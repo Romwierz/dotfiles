@@ -5,6 +5,8 @@
 def is_vanilla() -> bool:
     """ :return: whether running "vanilla" Python <3.13 """
     import sys
+    # Configure colors
+    sys.ps1 = "\033[0;35m>>> \033[0m"
     return not hasattr(__builtins__, '__IPYTHON__') and 'bpython' not in sys.argv[0] and sys.version_info < (3, 13)
 
 
