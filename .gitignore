@@ -8,3 +8,5 @@ saved_theme
 .config/tmux/plugins/*
 
 .config/secrets/
+
+.config/nvim/lua/local.lua

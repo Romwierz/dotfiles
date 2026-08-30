@@ -1,3 +1,10 @@
+-- Get device-specific configuration
+local local_config = require('local')
+
+if local_config.machine_type == "server" then
+    return
+end
+
 -- Auto install vim-plug if not found
 local data_dir = vim.fn.stdpath('data')
 if vim.fn.empty(vim.fn.glob(data_dir .. '/site/autoload/plug.vim')) == 1 then
