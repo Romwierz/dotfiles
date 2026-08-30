@@ -15,3 +15,7 @@ systemd/system/*
 .scripts/README.md
 
 fix-this-distro/
+
+.local/state/*
+.local/src/*
+.local/share/zinit
