@@ -1,3 +1,8 @@
+# Source shell-agnostic stuff first
+if [ -f ~/.config/bash/bash_aliases ]; then
+    . ~/.config/bash/bash_aliases
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -95,9 +100,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
-if [ -f ~/.config/bash/bash_aliases ]; then
-    . ~/.config/bash/bash_aliases
-fi
 
 # Shell integrations
 # If on graphical session (X11) export $WINDOWID to be used by ctpv/ueberzugpp
