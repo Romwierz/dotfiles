@@ -12,8 +12,6 @@ kbd/*
 
 systemd/system/*
 
-.scripts/README.md
-
 fix-this-distro/
 
 .local/state/*
