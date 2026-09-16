@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('grd', fuzzy_finder.lsp_definitions, '[G]oto [D]efinition') -- press <C-t> to jump back
         map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
         map('gO', fuzzy_finder.lsp_document_symbols, 'Open Document Symbols')
-        map('gW', fuzzy_finder.lsp_workspace_symbols, 'Open Workspace Symbols')
+        map('gW', fuzzy_finder.lsp_live_workspace_symbols, 'Open Workspace Symbols')
         map('grt', fuzzy_finder.lsp_typedefs, '[G]oto [T]ype Definition')
 
         -- Diagnostic keymaps
