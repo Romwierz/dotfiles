@@ -1,0 +1,13 @@
+% search in files
+
+# Search in file after specific line
+tail -n +"${"$(rg -n '<line>' <input>)"%:*}" <input> | rg -A 5 <pattern>
+
+$ input: ls
+
+# Search in Cross Reference Table
+tail -n +"${"$(rg -n 'Cross Reference Table' <map_file>)"%:*}" <map_file> | rg -A 5 <symbol>
+
+; Using only '*/**/*.map' as glob pattern doesn't work for some reason
+$ map_file: ls *.map */*.map */**/*.map
+$ symbol: map_file=<map_file> && nm -n "${map_file%.map}" --- --column 3 --delimiter ' +'
