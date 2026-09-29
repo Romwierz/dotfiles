@@ -1,0 +1,7 @@
+% find files
+
+# Find all .c and .h files in specified directories recursively
+fdfind -uuu --base-directory=<root-dir> -g '*.{c,h}' <dir1> <dir2>
+
+$ dir1: ls -d <root-dir>/*
+$ dir2: ls -d <root-dir>/*
