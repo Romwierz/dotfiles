@@ -1,3 +1,10 @@
 *.o
 compile_commands.json
 .cache/
+.python-version
+# gtags + GNU global files
+GPATH
+GRTAGS
+GTAGS
+target-files*
+pyrightconfig.json
