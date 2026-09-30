@@ -1,8 +1,10 @@
 -- Get device-specific configuration
-local local_config = require('local')
-
-if local_config.machine_type == "server" then
+local success, local_config = pcall(require, 'local')
+if success and local_config.machine_type == "server" then
     return
+else if not success then
+    print('Local config not detected')
+end
 end
 
 -- Auto install vim-plug if not found
