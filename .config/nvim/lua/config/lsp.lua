@@ -148,6 +148,17 @@ local servers = {
         },
 
     },
+    -- It doesn't work for some reason, but set in pyrightconfig.json it does
+    basedpyright = {
+        settings = {
+            basedpyright = {
+                analysis = {
+                    reportUnusedCallResult = "none",
+                    typeCheckingMode = "recommended",
+                }
+            }
+        }
+    },
 }
 
 for server_name, config in pairs(servers) do
