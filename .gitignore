@@ -10,3 +10,4 @@ saved_theme
 .config/secrets/
 
 .config/nvim/lua/local.lua
+.config/shell/local
