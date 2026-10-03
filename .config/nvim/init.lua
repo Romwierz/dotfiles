@@ -7,58 +7,44 @@ else if not success then
 end
 end
 
--- Auto install vim-plug if not found
-local data_dir = vim.fn.stdpath('data')
-if vim.fn.empty(vim.fn.glob(data_dir .. '/site/autoload/plug.vim')) == 1 then
-vim.cmd('silent !curl -fLo ' .. data_dir .. '/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-	vim.o.runtimepath = vim.o.runtimepath
-	vim.cmd('autocmd VimEnter * PlugInstall --sync | source $MYVIMRC')
-end
-
-local vim = vim
-local Plug = vim.fn['plug#']
-
 vim.g.start_time = vim.fn.reltime()
-vim.loader.enable() --  SPEEEEEEEEEEED 
+-- This may cause issues
+-- vim.loader.enable() --  SPEEEEEEEEEEED 
 
-vim.call('plug#begin')
+local gh = function(x) return 'https://github.com/' .. x end
 
--- Themes
-Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
-Plug('ellisonleao/gruvbox.nvim', { ['as'] = 'gruvbox' })
+-- Themes and UI
+vim.pack.add({
+    gh('catppuccin/nvim'),
+    gh('ellisonleao/gruvbox.nvim'),
+    gh('norcalli/nvim-colorizer.lua'), --color highlight
+    gh('nvim-lualine/lualine.nvim'), --statusline
+    gh('nvim-tree/nvim-web-devicons'), --pretty icons
+    gh('folke/which-key.nvim') --mappings popup
+})
 
-Plug('norcalli/nvim-colorizer.lua') --color highlight
-Plug('lewis6991/gitsigns.nvim') --git
-Plug('nvim-lualine/lualine.nvim') --statusline
-Plug('nvim-tree/nvim-web-devicons') --pretty icons
-Plug('folke/which-key.nvim') --mappings popup
-Plug('nvim-treesitter/nvim-treesitter') --improved syntax
-Plug('windwp/nvim-autopairs') --autopairs
-Plug('ibhagwan/fzf-lua') --fuzzy finder and grep
-Plug('folke/zen-mode.nvim') --zen-mode
---Plug ('shortcuts/no-neck-pain.nvim', { [ 'tag' ] = '*' })
-Plug ('shortcuts/no-neck-pain.nvim')
-Plug('MeanderingProgrammer/render-markdown.nvim') --render md inline
-Plug "rafamadriz/friendly-snippets"
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'kylechui/nvim-surround'
+-- Uncategorized
+vim.pack.add({
+    gh('lewis6991/gitsigns.nvim'), --git
+    { src = gh('nvim-treesitter/nvim-treesitter'), version = 'master'},
+    gh('windwp/nvim-autopairs'),
+    gh('ibhagwan/fzf-lua'), --fuzzy finder and grep
+    gh('shortcuts/no-neck-pain.nvim'),
+    gh('MeanderingProgrammer/render-markdown.nvim'), --render md inline
+    gh("rafamadriz/friendly-snippets"),
+    gh('christoomey/vim-tmux-navigator'),
+    gh('kylechui/nvim-surround'),
+})
 
--- LSP stuff
-Plug 'mason-org/mason.nvim'
-Plug 'mason-org/mason-lspconfig.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'saghen/blink.cmp'
+-- -- LSP stuff
+vim.pack.add({
+    gh('mason-org/mason.nvim'),
+    gh('mason-org/mason-lspconfig.nvim'),
+    gh('neovim/nvim-lspconfig'),
+    { src = gh('saghen/blink.cmp'), version = 'v1'}
+})
 
--- DAP
-Plug 'mfussenegger/nvim-dap'
-Plug 'nvim-neotest/nvim-nio'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'igorlfs/nvim-dap-view'
-Plug 'https://codeberg.org/Jorenar/nvim-dap-disasm.git'
-
-vim.call('plug#end')
-
--- Load configs from different files
+-- -- Load configs from different files
 require("config.theme")
 require("config.keymappings")
 require("config.options")
@@ -76,7 +62,6 @@ require("plugins.no-neck-pain")
 require("plugins.blink")
 
 require("config.lsp")
-require("config.dap")
 
 require("plugins.which-key")
 
@@ -85,7 +70,7 @@ load_theme()
 if vim.env.NVIM_MODE == "notes" then
     require("plugins.render-markdown")
     vim.cmd("Gitsigns toggle_signs")
-    if get_hostname() == "madnessaltar" then
+    if local_config.notes_theme == 'light' then
         vim.opt.bg = 'light'
         vim.cmd("colorscheme gruvbox")
         require("lualine").setup({ options = { theme = "gruvbox" } })
