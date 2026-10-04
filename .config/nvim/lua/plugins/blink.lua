@@ -11,6 +11,13 @@ require("blink.cmp").setup{
         },
     },
     cmdline = {
+        completion = {
+            list = {
+                selection = {
+                    auto_insert = false,
+                },
+            },
+        },
         enabled = true,
         keymap = {
             preset = 'cmdline' ,
