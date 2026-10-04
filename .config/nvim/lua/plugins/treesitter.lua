@@ -1,20 +1,14 @@
-require('nvim-treesitter.configs').setup {
-	ensure_installed = { "bash", "c", "css", "cpp", "go", "html", "java", "javascript", "json", "lua", "markdown", "markdown_inline", "python", "rust", "tsx", "typescript" },
-	highlight = {
-		enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-		additional_vim_regex_highlighting = false,
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-		init_selection = "gnn", -- set to `false` to disable one of the mappings
-		node_incremental = "grn",
-		scope_incremental = "grc",
-		node_decremental = "grm",
-		},
-	},
+require('nvim-treesitter').setup {
+    -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+    install_dir = vim.fn.stdpath('data') .. '/site',
+    highlight = { enable = true }
 }
+
+require('nvim-treesitter').install { "bash", "c", "css", "cpp", "go", "html", "java",
+    "javascript", "json", "lua", "markdown", "markdown_inline", "python", "rust", "tsx", "typescript" }
+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = "Enable Treesitter for every supported filetype ",
+  group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+  callback = function(args) pcall(vim.treesitter.start, args.buf) end,
+})

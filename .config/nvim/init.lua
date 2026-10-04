@@ -26,7 +26,7 @@ vim.pack.add({
 -- Uncategorized
 vim.pack.add({
     gh('lewis6991/gitsigns.nvim'), --git
-    { src = gh('nvim-treesitter/nvim-treesitter'), version = 'master'},
+    gh('nvim-treesitter/nvim-treesitter'),
     gh('windwp/nvim-autopairs'),
     gh('ibhagwan/fzf-lua'), --fuzzy finder and grep
     gh('shortcuts/no-neck-pain.nvim'),
