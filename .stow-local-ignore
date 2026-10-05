@@ -11,6 +11,7 @@ to-install.txt
 kbd/*
 
 systemd/system/*
+\.config/systemd/user/default\.target\.wants/.*
 
 fix-this-distro/
 

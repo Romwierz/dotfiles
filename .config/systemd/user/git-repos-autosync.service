@@ -20,6 +20,7 @@ ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/.scripts/
 ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/dotfiles/
 ExecStart=/home/michal/.scripts/git-repo-sync pull /home/michal/Notes/
 RemainAfterExit=yes
+ExecStop=/home/michal/.scripts/git-repo-sync push-notes
 
 [Install]
 WantedBy=default.target
