@@ -5,7 +5,7 @@ require('nvim-treesitter').setup {
 }
 
 require('nvim-treesitter').install { "bash", "c", "css", "cpp", "go", "html", "java",
-    "javascript", "json", "lua", "markdown", "markdown_inline", "python", "rust", "tsx", "typescript" }
+    "javascript", "json", "lua", "markdown", "markdown_inline", "python", "rust", "tsx", "typescript", "typst" }
 
 vim.api.nvim_create_autocmd('FileType', {
   desc = "Enable Treesitter for every supported filetype ",
