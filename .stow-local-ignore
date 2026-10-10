@@ -18,3 +18,5 @@ fix-this-distro/
 .local/state/*
 .local/src/*
 .local/share/zinit
+
+misc/
