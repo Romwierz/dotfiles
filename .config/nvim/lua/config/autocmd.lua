@@ -130,6 +130,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         link("SignColumn", "Normal")
         link("@string.escape", "@string")
         link("@function.macro", "Function")
+        link("@markup.link.url", "@markup.link.label")
         vim.api.nvim_set_hl(0, "@markup.italic", { fg = "fg", italic = true })
     end,
 })

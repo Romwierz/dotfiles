@@ -59,12 +59,17 @@ local function paste_image()
 
     utils.put_text(link)
 end
-local function paste_website(url)
-    local link = "[" .. url .. "]()  "
-
+local function paste_website(url, autolink)
+    local link
+    if autolink then
+        link = "<" .. url .. ">  "
+    else
+        link = "[" .. url .. "]()  "
+    end
     utils.put_text(link)
 end
-local function paste_md_ref()
+local function paste_md_ref(autolink)
+    autolink = autolink or false
     -- for images system clipboard utility must be used, but for other things register synchronized with
     -- the sytem clipboard (+) allows more flexibility
     local mime = vim.fn.system("xclip -selection clipboard -t TARGETS -o")
@@ -75,13 +80,17 @@ local function paste_md_ref()
     end
 
     if output:match("^https?://") then
-        return paste_website(output)
+        return paste_website(output, autolink)
     end
 
     print("Image/website in clipboard not found")
 end
-vim.keymap.set("n", "<leader>p", paste_md_ref, { desc = "Paste image/website from clipboard into Markdown" })
-vim.keymap.set("i", "<C-P>", paste_md_ref, { desc = "Paste image/website from clipboard into Markdown" })
+vim.keymap.set("n", "<leader>p", function() return paste_md_ref(false) end,
+                { desc = "Paste image/website from clipboard into Markdown" })
+vim.keymap.set("i", "<C-P>", function() return paste_md_ref(false) end,
+                { desc = "Paste image/website from clipboard into Markdown" })
+vim.keymap.set("n", "<leader>P", function() return paste_md_ref(true) end,
+                { desc = "Paste autolink from clipboard into Markdown" })
 ---------------------------------------------------------------------
 
 -- Additional yanking and deleting
